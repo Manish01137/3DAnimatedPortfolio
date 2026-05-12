@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: none !important;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #000;
+  color: #fff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Marquee animations ── */
+@keyframes marqueeL {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marqueeR {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* ── Float animations for 3D objects ── */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0)    rotate(0deg);  }
+  50%       { transform: translateY(-18px) rotate(6deg); }
+}
+@keyframes floatY2 {
+  0%, 100% { transform: translateY(0)    rotate(0deg);   }
+  50%       { transform: translateY(-14px) rotate(-8deg); }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar          { width: 4px; }
+::-webkit-scrollbar-track    { background: #000; }
+::-webkit-scrollbar-thumb    { background: #222; border-radius: 2px; }
+
+/* ── GSAP pinned section fix ── */
+.gsap-marker-start, .gsap-marker-end, .gsap-marker-scroller-start, .gsap-marker-scroller-end {
+  display: none !important;
+}
