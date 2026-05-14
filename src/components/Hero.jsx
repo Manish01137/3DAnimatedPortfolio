@@ -9,7 +9,7 @@ export default function Hero() {
   const charY  = useTransform(scrollYProgress, [0, 1], [0, 40])
 
   return (
-    <section id="about" ref={ref}
+    <section id="home" ref={ref}
       style={{ position: 'relative', height: '100vh', background: '#000', overflow: 'hidden' }}
     >
       {/* ── HEADING – top of viewport, full-width ── */}
@@ -28,25 +28,30 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       >
-        HI, I'M ALEX
+        HI, I'M RAHUL
       </motion.h1>
 
       {/* ── LEFT SUBTITLE ── */}
       <motion.p
         style={{
-          position: 'absolute', left: '4.5vw', top: '46%', translateY: '-50%',
+          position: 'absolute', left: '4.5vw', top: '50%', translateY: '-50%',
           zIndex: 20, margin: 0,
-          fontFamily: 'Inter, sans-serif', fontWeight: 900,
-          fontSize: 'clamp(9px, 0.82vw, 12px)', letterSpacing: '0.1em',
-          color: '#fff', textTransform: 'uppercase', lineHeight: 1.75, maxWidth: 180,
+          fontFamily: 'Inter, sans-serif', fontWeight: 500,
+          fontSize: 'clamp(10px, 0.78vw, 12px)', letterSpacing: '0.02em',
+          color: 'rgba(255,255,255,0.75)', lineHeight: 1.8, maxWidth: 230,
         }}
         initial={{ opacity: 0, x: -24 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
       >
-        A 3D DESIGNER PASSIONATE<br />
-        ABOUT CRAFTING BOLD AND<br />
-        MEMORABLE PROJECTS 😍
+        I love everything that has to do with<br />
+        design, for me design is not a job, it's a<br />
+        lifestyle and I feel true devotion for Art.<br />
+        My skills include "but are not limited to"<br />
+        branding, Typography, Photo<br />
+        Manipulation, Re-Touching, Editorial<br />
+        Designs, Photography, Illustration & last<br />
+        but not least, social media Designs.
       </motion.p>
 
       {/* ── CTA BUTTON ── */}

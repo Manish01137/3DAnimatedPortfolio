@@ -42,12 +42,12 @@ export default function Footer() {
           }}>
             LET'S<br />GET IN<br />TOUCH
           </h2>
-          <a href="mailto:alex@3ddesigner.com"
+          <a href="mailto:rahul@rahuldesigns.com"
             style={{ fontFamily: 'Inter', fontWeight: 600, fontSize: 'clamp(12px, 1.1vw, 16px)', color: 'rgba(0,0,0,0.45)', textDecoration: 'none', letterSpacing: '0.02em', borderBottom: '1px solid rgba(0,0,0,0.2)', paddingBottom: 2, transition: 'color 0.2s' }}
             onMouseEnter={e => e.currentTarget.style.color = '#000'}
             onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.45)'}
           >
-            alex@3ddesigner.com
+            rahul@rahuldesigns.com
           </a>
         </motion.div>
 
@@ -119,7 +119,7 @@ export default function Footer() {
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.6, delay: 0.3 }}
       >
-        <span style={{ fontFamily: '"Bebas Neue"', fontSize: 28, letterSpacing: '0.1em', color: '#000' }}>ALEX.</span>
+        <span style={{ fontFamily: '"Bebas Neue"', fontSize: 28, letterSpacing: '0.1em', color: '#000' }}>RAHUL.</span>
 
         <div style={{ display: 'flex', gap: 28 }}>
           {socials.map((s) => (
@@ -134,7 +134,7 @@ export default function Footer() {
         </div>
 
         <span style={{ fontFamily: 'Inter', fontSize: 11, color: 'rgba(0,0,0,0.3)', letterSpacing: '0.04em' }}>
-          © 2024 Alex — All rights reserved
+          © 2024 Rahul — All rights reserved
         </span>
       </motion.div>
     </footer>

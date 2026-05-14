@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-const links = ['About', 'Customers', 'Projects', 'Contact']
+const links = ['About', 'Projects', 'Services', 'Contact']
 
 export default function Navbar() {
   const navRef = useRef(null)
@@ -20,7 +20,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-8 flex items-center justify-between">
-        <span className="font-bebas text-white text-2xl tracking-widest">ALEX.</span>
+        <span className="font-bebas text-white text-2xl tracking-widest">RAHUL.</span>
         <ul className="hidden md:flex gap-12">
           {links.map((l) => (
             <li key={l}>
