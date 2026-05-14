@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const services = [
   { num: '01', title: 'Branding & Identity Design',  accent: '#a855f7',
@@ -160,6 +164,7 @@ export default function Services() {
   const inView = useInView(ref, { once: true, margin: '-100px' })
   const [hovered, setHovered] = useState(null)
   const previewRef = useRef(null)
+  const titleRef   = useRef(null)
 
   // Floating circle preview tracks cursor
   useEffect(() => {
@@ -174,6 +179,25 @@ export default function Services() {
     }
     window.addEventListener('mousemove', onMove)
     return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(raf) }
+  }, [])
+
+  // SERVICES title outline → fill (black on white bg)
+  useEffect(() => {
+    if (!titleRef.current) return
+    const tween = gsap.fromTo(titleRef.current,
+      { color: 'rgba(10,10,10,0)' },
+      {
+        color: 'rgba(10,10,10,1)',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start:   'top 85%',
+          end:     'top 35%',
+          scrub:   1,
+        },
+      }
+    )
+    return () => { tween.scrollTrigger?.kill(); tween.kill() }
   }, [])
 
   return (
@@ -260,19 +284,20 @@ export default function Services() {
         >
           What I do · 9 capabilities
         </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 28 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        <h2
+          ref={titleRef}
           style={{
-            fontFamily: '"Bebas Neue"',
+            fontFamily: '"Bowlby One", sans-serif',
             fontSize: 'clamp(80px, 14vw, 220px)',
-            color: '#0a0a0a', margin: 0, lineHeight: 0.9,
+            color: 'rgba(10,10,10,0)',
+            WebkitTextStroke: '1.5px #0a0a0a',
+            margin: 0, lineHeight: 0.9,
             letterSpacing: '-0.02em',
+            userSelect: 'none',
           }}
         >
           SERVICES
-        </motion.h2>
+        </h2>
       </div>
 
       {/* ── Service list ── */}

@@ -1,5 +1,9 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 // Public 3D-style emoji PNGs (Apple's CDN — used in Footer too)
 const props = [
@@ -10,8 +14,27 @@ const props = [
 ]
 
 export default function About() {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-120px' })
+  const ref      = useRef(null)
+  const titleRef = useRef(null)
+  const inView   = useInView(ref, { once: true, margin: '-120px' })
+
+  useEffect(() => {
+    if (!titleRef.current) return
+    const tween = gsap.fromTo(titleRef.current,
+      { color: 'rgba(255,255,255,0)' },
+      {
+        color: 'rgba(255,255,255,1)',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start:   'top 85%',
+          end:     'top 35%',
+          scrub:   1,
+        },
+      }
+    )
+    return () => { tween.scrollTrigger?.kill(); tween.kill() }
+  }, [])
 
   return (
     <section id="about" ref={ref}
@@ -41,23 +64,22 @@ export default function About() {
       ))}
 
       {/* ── Heading ── */}
-      <motion.h2
-        initial={{ opacity: 0, y: 40 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+      <h2
+        ref={titleRef}
         style={{
-          fontFamily: '"Bebas Neue"',
-          fontSize: 'clamp(64px, 11vw, 180px)',
-          color: '#fff', margin: 0, lineHeight: 0.95,
+          fontFamily: '"Bowlby One", sans-serif',
+          fontSize: 'clamp(64px, 13vw, 200px)',
+          color: 'rgba(255,255,255,0)',
+          WebkitTextStroke: '1.5px #fff',
+          margin: 0, lineHeight: 0.92,
           textAlign: 'center',
-          background: 'linear-gradient(175deg, #ffffff 0%, #a0a0a0 100%)',
-          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-          letterSpacing: '-0.01em',
+          letterSpacing: '-0.02em',
           position: 'relative', zIndex: 5,
+          userSelect: 'none',
         }}
       >
         ABOUT ME
-      </motion.h2>
+      </h2>
 
       {/* ── Body Copy ── */}
       <motion.div
