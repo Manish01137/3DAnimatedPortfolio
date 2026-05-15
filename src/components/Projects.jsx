@@ -1,53 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-import p1_1 from '../assets/project/1/1.jpg'
-import p1_2 from '../assets/project/1/2.jpg'
-import p1_3 from '../assets/project/1/3.jpg'
-import p2_1 from '../assets/project/2/1.jpg'
-import p2_2 from '../assets/project/2/2.jpg'
-import p2_3 from '../assets/project/2/3.jpg'
-import p3_1 from '../assets/project/3/1.jpg'
-import p3_2 from '../assets/project/3/2.jpg'
-import p3_3 from '../assets/project/3/3.jpg'
-import p4_1 from '../assets/project/4/1.jpg'
-import p4_2 from '../assets/project/4/2.jpg'
-import p4_3 from '../assets/project/4/3.jpg'
-import p5_1 from '../assets/project/5/1.jpg'
-import p5_2 from '../assets/project/5/2.jpg'
-import p5_3 from '../assets/project/5/3.jpg'
-import p6_1 from '../assets/project/6/1.jpg'
-import p6_2 from '../assets/project/6/2.jpg'
-import p6_3 from '../assets/project/6/3.jpg'
-import p7_1 from '../assets/project/7/1.jpg'
-import p7_2 from '../assets/project/7/2.jpg'
-import p7_3 from '../assets/project/7/3.jpg'
-import p8_1 from '../assets/project/8/1.jpg'
-import p8_2 from '../assets/project/8/2.jpg'
-import p8_3 from '../assets/project/8/3.jpg'
-import p9_1 from '../assets/project/9/1.jpg'
-import p9_2 from '../assets/project/9/2.jpg'
-import p9_3 from '../assets/project/9/3.jpg'
+import { projects } from '../data/projects'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const projects = [
-  { num: '01', name: 'Skyline Studios',    accent: '#a855f7', images: [p1_1, p1_2, p1_3] },
-  { num: '02', name: 'Pixel Forge',        accent: '#06b6d4', images: [p2_1, p2_2, p2_3] },
-  { num: '03', name: 'MetaForm Creations', accent: '#f59e0b', images: [p3_1, p3_2, p3_3] },
-  { num: '04', name: 'Aurum & Co.',        accent: '#ec4899', images: [p4_1, p4_2, p4_3] },
-  { num: '05', name: 'RealmForge Studios', accent: '#22c55e', images: [p5_1, p5_2, p5_3] },
-  { num: '06', name: 'Velocity Motors',    accent: '#3b82f6', images: [p6_1, p6_2, p6_3] },
-  { num: '07', name: 'GlowSkin Beauty',    accent: '#f43f5e', images: [p7_1, p7_2, p7_3] },
-  { num: '08', name: 'Quantum Labs',       accent: '#14b8a6', images: [p8_1, p8_2, p8_3] },
-  { num: '09', name: 'Saffron Foods',      accent: '#8b5cf6', images: [p9_1, p9_2, p9_3] },
-]
 
 export default function Projects() {
   const sectionRef = useRef(null)
   const titleRef   = useRef(null)
   const [active, setActive] = useState(0)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -248,12 +211,13 @@ export default function Projects() {
                   </span>
                 </div>
 
-                {/* Live Project pill */}
-                <a
-                  href="#"
+                {/* View Project pill → detail page */}
+                <button
+                  type="button"
                   data-cursor
+                  onClick={() => navigate(`/work/${p.slug}`)}
                   style={{
-                    display: 'inline-flex', alignItems: 'center',
+                    display: 'inline-flex', alignItems: 'center', gap: 8,
                     padding: '14px 32px',
                     borderRadius: 999,
                     border: '1px solid rgba(255,255,255,0.5)',
@@ -268,8 +232,8 @@ export default function Projects() {
                   onMouseEnter={e => { e.currentTarget.style.background = p.accent; e.currentTarget.style.borderColor = p.accent }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)' }}
                 >
-                  Live Project
-                </a>
+                  View Project <span style={{ fontSize: 14 }}>↗</span>
+                </button>
               </div>
 
               {/* Image grid: 1 big left + 2 stacked right */}
@@ -345,7 +309,30 @@ export default function Projects() {
         ))}
       </div>
 
-      <div style={{ height: '30vh' }} />
+      {/* ── View All Work CTA ── */}
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '60px 4vw 0' }}>
+        <button
+          type="button"
+          data-cursor
+          onClick={() => navigate('/work')}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 12,
+            padding: '20px 52px', borderRadius: 9999,
+            fontFamily: 'Inter', fontWeight: 800,
+            fontSize: 'clamp(12px, 1vw, 15px)', letterSpacing: '0.16em',
+            color: '#fff', textTransform: 'uppercase', cursor: 'none',
+            background: 'linear-gradient(#000,#000) padding-box, linear-gradient(135deg,#a855f7,#ec4899,#f59e0b) border-box',
+            border: '2px solid transparent',
+            transition: 'transform 0.3s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)' }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)' }}
+        >
+          View All Work <span style={{ fontSize: 16 }}>→</span>
+        </button>
+      </div>
+
+      <div style={{ height: '24vh' }} />
     </section>
   )
 }

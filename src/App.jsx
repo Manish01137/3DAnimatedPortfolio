@@ -1,28 +1,27 @@
-import Cursor       from './components/Cursor'
-import Navbar       from './components/Navbar'
-import Hero         from './components/Hero'
-import Marquee      from './components/Marquee'
-import About        from './components/About'
-import Projects     from './components/Projects'
-import Services     from './components/Services'
-import Testimonials from './components/Testimonials'
-import MeetTeam     from './components/MeetTeam'
-import Footer       from './components/Footer'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
+import Cursor   from './components/Cursor'
+import Navbar   from './components/Navbar'
+import Home     from './pages/Home'
+import WorkPage from './pages/WorkPage'
+import ProjectDetail from './pages/ProjectDetail'
 
 export default function App() {
+  const location = useLocation()
+
   return (
     <>
       <Cursor />
       <main style={{ background: '#000' }}>
         <Navbar />
-        <Hero />
-        <Marquee />
-        <About />
-        <Projects />
-        <Services />
-        <Testimonials />
-        <MeetTeam />
-        <Footer />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/"            element={<Home />} />
+            <Route path="/work"        element={<WorkPage />} />
+            <Route path="/work/:slug"  element={<ProjectDetail />} />
+            <Route path="*"            element={<Home />} />
+          </Routes>
+        </AnimatePresence>
       </main>
     </>
   )
