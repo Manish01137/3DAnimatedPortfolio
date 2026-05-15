@@ -6,6 +6,7 @@ import About        from './components/About'
 import Projects     from './components/Projects'
 import Services     from './components/Services'
 import Testimonials from './components/Testimonials'
+import MeetTeam     from './components/MeetTeam'
 import Footer       from './components/Footer'
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Projects />
         <Services />
         <Testimonials />
+        <MeetTeam />
         <Footer />
       </main>
     </>

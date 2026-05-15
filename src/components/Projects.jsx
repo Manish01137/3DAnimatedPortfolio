@@ -62,14 +62,13 @@ export default function Projects() {
           onToggle: (self) => { if (self.isActive) setActive(i) },
         })
 
-        // Sticky-stack scale-down as next card slides over
+        // Clean stack: previous card stays fully visible, just nudges
+        // back like a card in a deck — no opacity / brightness drop.
         if (i < cards.length - 1) {
           const next = cards[i + 1]
           gsap.to(card, {
-            scale: 0.92,
-            opacity: 0.4,
-            y: -28,
-            filter: 'brightness(0.55)',
+            scale: 0.95,
+            y: -24,
             ease: 'none',
             scrollTrigger: {
               trigger: next,
@@ -199,7 +198,7 @@ export default function Projects() {
               justifyContent: 'center',
               padding: '0 4vw',
               transformOrigin: '50% 0%',
-              willChange: 'transform, opacity, filter',
+              willChange: 'transform',
             }}
           >
             {/* Outer rounded container */}
