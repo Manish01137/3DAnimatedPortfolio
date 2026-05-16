@@ -26,7 +26,7 @@ export default function Footer() {
       </div>
 
       {/* Top contact area */}
-      <div style={{ padding: '100px 8vw 80px', maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ padding: '100px 8vw 80px', maxWidth: 1440, margin: '0 auto' }}>
         {/* Big headline */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}

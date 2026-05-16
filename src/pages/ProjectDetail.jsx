@@ -148,7 +148,7 @@ export default function ProjectDetail() {
       </section>
 
       {/* Intro / description */}
-      <section style={{ padding: 'clamp(80px, 12vh, 160px) 6vw', maxWidth: 1100, margin: '0 auto' }}>
+      <section style={{ padding: 'clamp(80px, 12vh, 160px) 6vw', maxWidth: 1320, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', gap: 40 }}>
           <motion.h2
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
@@ -181,7 +181,7 @@ export default function ProjectDetail() {
       </section>
 
       {/* Gallery — remaining images large */}
-      <section style={{ padding: '0 6vw 60px', maxWidth: 1300, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 5vh, 64px)' }}>
+      <section style={{ padding: '0 6vw 60px', maxWidth: 1560, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 5vh, 64px)' }}>
         {project.images.slice(1).map((src, i) => (
           <RevealImage key={i} src={src} alt={`${project.name} ${i + 2}`} accent={project.accent} />
         ))}

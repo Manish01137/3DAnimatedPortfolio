@@ -1,7 +1,20 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 export default function Cursor() {
+  const [enabled, setEnabled] = useState(false)
+
+  // Only enable the custom cursor on real mouse devices (skip touch /
+  // coarse-pointer — Windows touch laptops, tablets, phones).
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return
+    const mq = window.matchMedia('(pointer: fine) and (hover: hover)')
+    const apply = () => setEnabled(mq.matches)
+    apply()
+    mq.addEventListener?.('change', apply)
+    return () => mq.removeEventListener?.('change', apply)
+  }, [])
+
   const mouseX = useMotionValue(-100)
   const mouseY = useMotionValue(-100)
 
@@ -14,6 +27,7 @@ export default function Cursor() {
   const ringRef = useRef(null)
 
   useEffect(() => {
+    if (!enabled) return
     const onMove = (e) => { mouseX.set(e.clientX); mouseY.set(e.clientY) }
 
     const expand  = () => { if (ringRef.current) { ringRef.current.style.transform = 'translate(-50%,-50%) scale(2.6)'; ringRef.current.style.opacity = '0.55' } }
@@ -37,7 +51,9 @@ export default function Cursor() {
       window.removeEventListener('mousemove', onMove)
       observer.disconnect()
     }
-  }, [mouseX, mouseY])
+  }, [mouseX, mouseY, enabled])
+
+  if (!enabled) return null
 
   return (
     <>

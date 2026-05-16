@@ -119,7 +119,7 @@ export default function MeetTeam() {
         ref={frameRef}
         style={{
           position: 'relative', zIndex: 2,
-          maxWidth: 1280, margin: '0 auto',
+          maxWidth: 1520, margin: '0 auto',
           borderRadius: 24, overflow: 'hidden',
           border: '1px solid rgba(255,255,255,0.12)',
           boxShadow: '0 60px 140px -40px rgba(168,85,247,0.35), 0 30px 80px -30px rgba(0,0,0,0.9)',

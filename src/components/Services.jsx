@@ -301,7 +301,7 @@ export default function Services() {
       </div>
 
       {/* ── Service list ── */}
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ maxWidth: 1480, margin: '0 auto' }}>
         {services.map((s, i) => (
           <ServiceRow key={s.num} s={s} i={i} hovered={hovered} setHovered={setHovered} inView={inView} />
         ))}

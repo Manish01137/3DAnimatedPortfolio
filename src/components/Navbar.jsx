@@ -18,6 +18,11 @@ export default function Navbar() {
 
   const go = (e, target) => {
     e.preventDefault()
+    // "Projects" routes to the dedicated All Work page
+    if (target === 'projects') {
+      navigate('/work')
+      return
+    }
     if (onHome) {
       const el = document.querySelector(`#${target}`)
       if (el) el.scrollIntoView({ behavior: 'smooth' })

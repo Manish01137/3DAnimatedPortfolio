@@ -166,7 +166,7 @@ export default function Projects() {
           >
             {/* Outer rounded container */}
             <div style={{
-              width: '100%', maxWidth: 1380,
+              width: '100%', maxWidth: 1600,
               borderRadius: 36,
               border: '1px solid rgba(255,255,255,0.18)',
               background: '#000',

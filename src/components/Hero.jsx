@@ -37,21 +37,18 @@ export default function Hero() {
           position: 'absolute', left: '4.5vw', top: '50%', translateY: '-50%',
           zIndex: 20, margin: 0,
           fontFamily: 'Inter, sans-serif', fontWeight: 500,
-          fontSize: 'clamp(10px, 0.78vw, 12px)', letterSpacing: '0.02em',
-          color: 'rgba(255,255,255,0.75)', lineHeight: 1.8, maxWidth: 230,
+          fontSize: 'clamp(14px, 1.05vw, 18px)', letterSpacing: '0.01em',
+          color: 'rgba(255,255,255,0.8)', lineHeight: 1.85, maxWidth: 340,
         }}
         initial={{ opacity: 0, x: -24 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
       >
-        I love everything that has to do with<br />
-        design, for me design is not a job, it's a<br />
-        lifestyle and I feel true devotion for Art.<br />
-        My skills include "but are not limited to"<br />
-        branding, Typography, Photo<br />
-        Manipulation, Re-Touching, Editorial<br />
-        Designs, Photography, Illustration & last<br />
-        but not least, social media Designs.
+        I love everything that has to do with design — for me design
+        isn't a job, it's a lifestyle, and I feel true devotion for Art.
+        My skills include (but are not limited to) branding, typography,
+        photo manipulation, re-touching, editorial design, photography,
+        illustration & social media design.
       </motion.p>
 
       {/* ── CTA BUTTON ── */}

@@ -217,7 +217,7 @@ export default function WorkPage() {
 
       {/* Editorial grid */}
       <div style={{
-        maxWidth: 1500, margin: '0 auto', padding: '0 5vw 140px',
+        maxWidth: 1760, margin: '0 auto', padding: '0 5vw 140px',
       }}>
         <motion.div
           layout
