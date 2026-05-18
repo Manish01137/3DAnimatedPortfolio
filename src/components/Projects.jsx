@@ -118,8 +118,9 @@ export default function Projects() {
       }}>
         {projects.map((p, i) => {
           const isActive = active === i
+          const dispNum = String(i + 1).padStart(2, '0')
           return (
-            <div key={p.num} style={{
+            <div key={p.slug} style={{
               display: 'flex', alignItems: 'center', gap: 10,
               opacity: isActive ? 1 : 0.4,
               transition: 'opacity 0.4s ease',
@@ -132,7 +133,7 @@ export default function Projects() {
                 transition: 'opacity 0.4s, transform 0.4s',
                 whiteSpace: 'nowrap',
               }}>
-                {p.num}
+                {dispNum}
               </span>
               <span style={{
                 width: isActive ? 22 : 12,
@@ -150,7 +151,7 @@ export default function Projects() {
       <div style={{ position: 'relative' }}>
         {projects.map((p, i) => (
           <div
-            key={p.num}
+            key={p.slug}
             className="proj-card"
             style={{
               position: 'sticky',
@@ -190,7 +191,7 @@ export default function Projects() {
                   color: '#fff',
                   letterSpacing: '-0.005em',
                 }}>
-                  {p.num}
+                  {String(i + 1).padStart(2, '0')}
                 </span>
 
                 {/* CLIENT label + name */}
