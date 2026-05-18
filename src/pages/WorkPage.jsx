@@ -18,6 +18,23 @@ const sizes = [
 
 function Tile({ p, size, index, navigate }) {
   const [hover, setHover] = useState(false)
+  const videoRef = useRef(null)
+  const isVideo = p.type === 'video'
+
+  const onEnter = () => {
+    setHover(true)
+    if (isVideo && videoRef.current) {
+      videoRef.current.play().catch(() => {})
+    }
+  }
+  const onLeave = () => {
+    setHover(false)
+    if (isVideo && videoRef.current) {
+      videoRef.current.pause()
+      videoRef.current.currentTime = 0
+    }
+  }
+
   return (
     <motion.div
       layout
@@ -27,8 +44,8 @@ function Tile({ p, size, index, navigate }) {
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.7, delay: (index % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
       onClick={() => navigate(`/work/${p.slug}`)}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
       style={{
         gridColumn: `span ${size.col}`,
         position: 'relative',
@@ -40,18 +57,59 @@ function Tile({ p, size, index, navigate }) {
       }}
     >
       <div style={{ aspectRatio: size.ratio, overflow: 'hidden' }}>
-        <img
-          src={p.images[0]}
-          alt={p.name}
-          draggable={false}
-          style={{
-            width: '100%', height: '100%', objectFit: 'cover',
-            display: 'block',
-            transform: hover ? 'scale(1.06)' : 'scale(1)',
-            transition: 'transform 0.8s cubic-bezier(0.16,1,0.3,1)',
-          }}
-        />
+        {isVideo ? (
+          <video
+            ref={videoRef}
+            src={p.videos[0]}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            style={{
+              width: '100%', height: '100%', objectFit: 'cover',
+              display: 'block',
+              transform: hover ? 'scale(1.04)' : 'scale(1)',
+              transition: 'transform 0.8s cubic-bezier(0.16,1,0.3,1)',
+            }}
+          />
+        ) : (
+          <img
+            src={p.images[0]}
+            alt={p.name}
+            draggable={false}
+            style={{
+              width: '100%', height: '100%', objectFit: 'cover',
+              display: 'block',
+              transform: hover ? 'scale(1.06)' : 'scale(1)',
+              transition: 'transform 0.8s cubic-bezier(0.16,1,0.3,1)',
+            }}
+          />
+        )}
       </div>
+
+      {/* Play affordance for reels */}
+      {isVideo && (
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: `translate(-50%,-50%) scale(${hover ? 0.6 : 1})`,
+          width: 64, height: 64, borderRadius: '50%',
+          background: 'rgba(0,0,0,0.45)',
+          backdropFilter: 'blur(6px)',
+          border: '1px solid rgba(255,255,255,0.4)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          opacity: hover ? 0 : 1,
+          transition: 'opacity 0.4s ease, transform 0.4s ease',
+          pointerEvents: 'none', zIndex: 3,
+        }}>
+          <span style={{
+            width: 0, height: 0,
+            borderTop: '10px solid transparent',
+            borderBottom: '10px solid transparent',
+            borderLeft: '16px solid #fff',
+            marginLeft: 4,
+          }} />
+        </div>
+      )}
 
       {/* Accent wash */}
       <div style={{
@@ -162,7 +220,7 @@ export default function WorkPage() {
             color: 'rgba(255,255,255,0.45)', margin: '0 0 16px',
           }}
         >
-          {projects.length} Selected Projects · 2022 — 2024
+          {projects.length} Selected Projects · 2023 — 2025
         </motion.p>
         <motion.h1
           ref={titleRef}
@@ -232,7 +290,7 @@ export default function WorkPage() {
               <Tile
                 key={p.slug}
                 p={p}
-                size={sizes[i % sizes.length]}
+                size={p.type === 'video' ? { col: 4, ratio: '9 / 16' } : sizes[i % sizes.length]}
                 index={i}
                 navigate={navigate}
               />

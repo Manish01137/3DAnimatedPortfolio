@@ -83,17 +83,30 @@ export default function ProjectDetail() {
       />
 
       {/* Hero */}
-      <section ref={heroRef} style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
-        <motion.img
-          src={project.images[0]}
-          alt={project.name}
-          draggable={false}
-          style={{
-            position: 'absolute', inset: 0,
-            width: '100%', height: '100%', objectFit: 'cover',
-            y: heroY, scale: heroScale, userSelect: 'none',
-          }}
-        />
+      <section ref={heroRef} style={{ position: 'relative', height: '100vh', overflow: 'hidden', background: '#000' }}>
+        {project.type === 'video' ? (
+          <video
+            src={project.videos[0]}
+            autoPlay muted loop playsInline controls
+            style={{
+              position: 'absolute', inset: 0, margin: 'auto',
+              maxWidth: '94vw', maxHeight: '100vh',
+              width: 'auto', height: '100%', objectFit: 'contain',
+              display: 'block',
+            }}
+          />
+        ) : (
+          <motion.img
+            src={project.images[0]}
+            alt={project.name}
+            draggable={false}
+            style={{
+              position: 'absolute', inset: 0,
+              width: '100%', height: '100%', objectFit: 'cover',
+              y: heroY, scale: heroScale, userSelect: 'none',
+            }}
+          />
+        )}
         <div style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.5) 100%)',
@@ -154,22 +167,33 @@ export default function ProjectDetail() {
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              fontFamily: '"Bebas Neue"', fontSize: 'clamp(28px, 4vw, 56px)',
-              color: '#fff', margin: 0, lineHeight: 1.1, maxWidth: 900,
+              fontFamily: '"Bebas Neue"', fontSize: 'clamp(32px, 5vw, 72px)',
+              color: '#fff', margin: 0, lineHeight: 1.05, maxWidth: 1000,
+            }}
+          >
+            {project.title}
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}
+            style={{
+              fontFamily: 'Inter', fontSize: 'clamp(15px, 1.2vw, 18px)',
+              color: 'rgba(255,255,255,0.62)', margin: 0,
+              lineHeight: 1.85, maxWidth: 820,
             }}
           >
             {project.description}
-          </motion.h2>
+          </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15 }}
             style={{ display: 'flex', flexWrap: 'wrap', gap: 40, borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 32 }}
           >
             {[
-              ['Client', project.name],
-              ['Discipline', project.category],
+              ['Client', project.client],
+              ['Service', project.service],
               ['Year', project.year],
-              ['Type', project.tag],
+              ['Discipline', project.category],
             ].map(([k, v]) => (
               <div key={k} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>{k}</span>
