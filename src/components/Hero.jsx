@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import cartoonModel from '../assets/modelCartoon.png'
 
 const ease = [0.16, 1, 0.3, 1]
@@ -23,6 +23,19 @@ export default function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const textY  = useTransform(scrollYProgress, [0, 1], [0, -60])
   const charY  = useTransform(scrollYProgress, [0, 1], [0, 40])
+
+  /* ── Cursor-driven 3D tilt for the character ── */
+  const spring = { stiffness: 120, damping: 18, mass: 0.6 }
+  const rotX = useSpring(useMotionValue(0), spring)
+  const rotY = useSpring(useMotionValue(0), spring)
+  const shadowX = useTransform(rotY, [-14, 14], [40, -40])
+
+  const handleTilt = (e) => {
+    const { innerWidth: w, innerHeight: h } = window
+    rotY.set(((e.clientX - w / 2) / (w / 2)) * 14)
+    rotX.set(((e.clientY - h / 2) / (h / 2)) * -10)
+  }
+  const resetTilt = () => { rotX.set(0); rotY.set(0) }
 
   /* ───────────────────────── MOBILE — premium stacked layout ───────────────────────── */
   if (isMobile) {
@@ -53,9 +66,9 @@ export default function Hero() {
           transition={{ duration: 1, ease }}
           style={{
             position: 'relative', zIndex: 3, margin: 0, textAlign: 'center',
-            fontFamily: '"Bebas Neue", sans-serif',
-            fontSize: 'clamp(56px, 17vw, 96px)',
-            lineHeight: 0.98, letterSpacing: '0.005em',
+            fontFamily: '"Bowlby One", sans-serif',
+            fontSize: 'clamp(40px, 12.5vw, 76px)',
+            lineHeight: 1.05, letterSpacing: '-0.01em',
             background: 'linear-gradient(175deg, #ffffff 0%, #8a8a8a 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             userSelect: 'none',
@@ -130,9 +143,11 @@ export default function Hero() {
     )
   }
 
-  /* ───────────────────────── DESKTOP — unchanged ───────────────────────── */
+  /* ───────────────────────── DESKTOP ───────────────────────── */
   return (
     <section id="home" ref={ref}
+      onMouseMove={handleTilt}
+      onMouseLeave={resetTilt}
       style={{ position: 'relative', height: '100vh', background: '#000', overflow: 'hidden' }}
     >
       {/* ── HEADING – top of viewport, full-width ── */}
@@ -140,8 +155,8 @@ export default function Hero() {
         style={{
           position: 'absolute', top: '12%', left: 0, right: 0, margin: 0,
           textAlign: 'center',
-          fontFamily: '"Bebas Neue", sans-serif',
-          fontSize: 'clamp(64px, 17.5vw, 240px)',
+          fontFamily: '"Bowlby One", sans-serif',
+          fontSize: 'clamp(36px, 8.8vw, 150px)',
           lineHeight: 1, letterSpacing: '-0.01em', whiteSpace: 'nowrap',
           background: 'linear-gradient(175deg, #ffffff 0%, #707070 100%)',
           WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
@@ -174,14 +189,11 @@ export default function Hero() {
         illustration & social media design.
       </motion.p>
 
-      {/* ── CTA BUTTON – centered, below the 3D character ── */}
+      {/* ── CTA BUTTON – right side (original position) ── */}
       <motion.div
-        style={{
-          position: 'absolute', left: '50%', bottom: 'clamp(6px, 1.4vh, 16px)',
-          translateX: '-50%', zIndex: 20,
-        }}
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
+        style={{ position: 'absolute', right: '4.5vw', top: '46%', translateY: '-50%', zIndex: 20 }}
+        initial={{ opacity: 0, x: 24 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, delay: 0.55, ease }}
       >
         <motion.a
@@ -202,24 +214,49 @@ export default function Hero() {
         </motion.a>
       </motion.div>
 
-      {/* ── CHARACTER – anchored to bottom, unchanged ── */}
+      {/* ── CHARACTER – cursor-driven 3D tilt ── */}
       <motion.div
         style={{
           position: 'absolute', bottom: 0, left: '50%', translateX: '-50%',
           y: charY, zIndex: 10, pointerEvents: 'none',
+          perspective: 1200,
         }}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.1, delay: 0.25, ease }}
       >
-        <motion.img
-          src={cartoonModel}
-          alt="3D Character"
-          style={{ height: '66vh', width: 'auto', maxWidth: '44vw', display: 'block' }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        <motion.div
+          style={{
+            rotateX: rotX, rotateY: rotY,
+            transformStyle: 'preserve-3d', transformPerspective: 1200,
+          }}
+        >
+          <motion.img
+            src={cartoonModel}
+            alt="3D Character"
+            style={{
+              height: '66vh', width: 'auto', maxWidth: '44vw', display: 'block',
+              filter: 'drop-shadow(0 38px 55px rgba(0,0,0,0.6))',
+            }}
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </motion.div>
       </motion.div>
+
+      {/* Soft ground shadow that shifts with the tilt */}
+      <motion.div
+        style={{
+          position: 'absolute', bottom: '2vh', left: '50%',
+          width: 'min(36vw, 480px)', height: 26,
+          x: shadowX, translateX: '-50%',
+          background: 'radial-gradient(ellipse, rgba(0,0,0,0.55) 0%, transparent 70%)',
+          filter: 'blur(8px)', zIndex: 9, pointerEvents: 'none',
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.1, delay: 0.45 }}
+      />
 
     </section>
   )
