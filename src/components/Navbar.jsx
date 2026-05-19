@@ -104,41 +104,121 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile full-screen menu */}
+      {/* Mobile slide-in sidebar */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden fixed inset-0 z-40 bg-black flex flex-col items-center justify-center gap-8"
-          >
-            {links.map((l, i) => (
+          <>
+            {/* Dim backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setOpen(false)}
+              className="md:hidden fixed inset-0 z-40"
+              style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)' }}
+            />
+
+            {/* Panel */}
+            <motion.aside
+              key="panel"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="md:hidden fixed top-0 right-0 z-40 h-full flex flex-col"
+              style={{
+                width: 'min(82vw, 360px)',
+                background: 'linear-gradient(195deg, #141414 0%, #0a0a0a 60%, #000 100%)',
+                borderLeft: '1px solid rgba(255,255,255,0.08)',
+                boxShadow: '-40px 0 90px -30px rgba(168,85,247,0.45)',
+                padding: '110px 34px 40px',
+              }}
+            >
+              {/* Gradient accent edge */}
+              <span style={{
+                position: 'absolute', top: 0, left: 0, width: 3, height: '100%',
+                background: 'linear-gradient(180deg,#a855f7,#ec4899,#f59e0b)',
+              }} />
+
+              <p style={{
+                fontFamily: 'Inter', fontWeight: 700, fontSize: 10,
+                letterSpacing: '0.28em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.35)', margin: '0 0 26px',
+              }}>
+                Menu
+              </p>
+
+              <nav className="flex flex-col gap-1">
+                {links.map((l, i) => (
+                  <motion.a
+                    key={l}
+                    href={`/#${l.toLowerCase()}`}
+                    onClick={(e) => go(e, l.toLowerCase())}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.12 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                    className="group flex items-baseline gap-3 py-3"
+                    style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+                  >
+                    <span style={{
+                      fontFamily: '"JetBrains Mono", monospace', fontSize: 11,
+                      color: 'rgba(255,255,255,0.3)',
+                    }}>
+                      0{i + 1}
+                    </span>
+                    <span
+                      className="font-bebas uppercase text-white"
+                      style={{ fontSize: 'clamp(30px, 9vw, 44px)', lineHeight: 1.05, letterSpacing: '0.02em' }}
+                    >
+                      {l}
+                    </span>
+                  </motion.a>
+                ))}
+              </nav>
+
               <motion.a
-                key={l}
-                href={`/#${l.toLowerCase()}`}
-                onClick={(e) => go(e, l.toLowerCase())}
+                href="/#contact"
+                onClick={(e) => go(e, 'contact')}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 + i * 0.06 }}
-                className="text-white font-bebas tracking-widest uppercase"
-                style={{ fontSize: 'clamp(34px, 10vw, 56px)' }}
+                transition={{ delay: 0.12 + links.length * 0.07 }}
+                className="mt-8 flex items-center justify-center font-inter font-black uppercase text-white"
+                style={{
+                  padding: '16px 28px', borderRadius: 9999, fontSize: 12,
+                  letterSpacing: '0.16em',
+                  background: 'linear-gradient(135deg,#a855f7,#ec4899,#f59e0b)',
+                  boxShadow: '0 16px 40px -14px rgba(236,72,153,0.6)',
+                }}
               >
-                {l}
+                Hire Me
               </motion.a>
-            ))}
-            <motion.a
-              href="/#contact"
-              onClick={(e) => go(e, 'contact')}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08 + links.length * 0.06 }}
-              className="mt-4 font-inter font-bold text-sm uppercase tracking-wider text-white px-8 py-3 rounded-full border border-white/40"
-            >
-              Hire Me
-            </motion.a>
-          </motion.div>
+
+              <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-8">
+                {[
+                  ['Instagram', 'https://www.instagram.com/rahulr7988/'],
+                  ['Behance', 'https://www.behance.net/mksrahulrai'],
+                  ['LinkedIn', 'https://www.linkedin.com/in/rahul-r-851076230/'],
+                  ['YouTube', 'https://www.youtube.com/@HindiDreamStorys'],
+                ].map(([label, href]) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      fontFamily: 'Inter', fontWeight: 600, fontSize: 11,
+                      letterSpacing: '0.08em', textTransform: 'uppercase',
+                      color: 'rgba(255,255,255,0.4)', textDecoration: 'none',
+                    }}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </motion.aside>
+          </>
         )}
       </AnimatePresence>
     </nav>
