@@ -50,15 +50,6 @@ export default function Hero() {
           padding: '104px 22px 32px',
         }}
       >
-        {/* Ambient premium glow */}
-        <div style={{
-          position: 'absolute', top: '46%', left: '50%',
-          width: '120vw', height: '120vw', maxWidth: 620, maxHeight: 620,
-          transform: 'translate(-50%, -50%)',
-          background: 'radial-gradient(circle, rgba(168,85,247,0.20) 0%, rgba(236,72,153,0.10) 42%, transparent 70%)',
-          filter: 'blur(30px)', pointerEvents: 'none', zIndex: 0,
-        }} />
-
         {/* Heading */}
         <motion.h1
           initial={{ opacity: 0, y: -18 }}
@@ -111,7 +102,6 @@ export default function Hero() {
             style={{
               maxHeight: '52vh', width: 'min(82vw, 420px)', height: 'auto',
               objectFit: 'contain', display: 'block', userSelect: 'none',
-              filter: 'drop-shadow(0 30px 60px rgba(168,85,247,0.25))',
             }}
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
