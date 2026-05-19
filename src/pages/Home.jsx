@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Hero         from '../components/Hero'
 import Marquee      from '../components/Marquee'
+import Gallery      from '../components/Gallery'
 import About        from '../components/About'
 import Education     from '../components/Education'
 import WorkExperience from '../components/WorkExperience'
@@ -29,6 +30,7 @@ export default function Home() {
     <>
       <Hero />
       <Marquee />
+      <Gallery />
       <About />
       <Education />
       <WorkExperience />

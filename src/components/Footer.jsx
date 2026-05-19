@@ -2,10 +2,11 @@ import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const socials = [
-  { label: 'Twitter',   href: '#' },
-  { label: 'Dribbble',  href: '#' },
-  { label: 'LinkedIn',  href: '#' },
-  { label: 'Instagram', href: '#' },
+  { label: 'Instagram', href: 'https://www.instagram.com/rahulr7988/' },
+  { label: 'Facebook',  href: 'https://www.facebook.com/designethical1/' },
+  { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/rahul-r-851076230/' },
+  { label: 'YouTube',   href: 'https://www.youtube.com/@HindiDreamStorys' },
+  { label: 'Behance',   href: 'https://www.behance.net/mksrahulrai' },
 ]
 
 export default function Footer() {
@@ -25,9 +26,15 @@ export default function Footer() {
         <img src="https://em-content.zobj.net/source/apple/391/chains_26d3-fe0f.png" alt="" style={{ width: '100%', filter: 'hue-rotate(260deg) drop-shadow(0 4px 14px rgba(168,85,247,0.4))' }} />
       </div>
 
-      {/* Top contact area */}
-      <div style={{ padding: '100px 8vw 80px', maxWidth: 1440, margin: '0 auto' }}>
-        {/* Big headline */}
+      {/* ── One container, two parts ── */}
+      <div
+        className="footer-grid"
+        style={{
+          padding: 'clamp(80px, 12vh, 110px) 8vw clamp(64px, 9vh, 90px)',
+          maxWidth: 1440, margin: '0 auto', position: 'relative', zIndex: 3,
+        }}
+      >
+        {/* Part 1 — Start a project / contact info */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -37,27 +44,42 @@ export default function Footer() {
             Start a project
           </p>
           <h2 style={{
-            fontFamily: '"Bebas Neue"', margin: '0 0 12px',
-            fontSize: 'clamp(56px, 10vw, 140px)', lineHeight: 1, color: '#000',
+            fontFamily: '"Bebas Neue"', margin: '0 0 16px',
+            fontSize: 'clamp(52px, 9vw, 130px)', lineHeight: 1, color: '#000',
           }}>
             LET'S<br />GET IN<br />TOUCH
           </h2>
           <a href="mailto:rahul@rahuldesigns.com"
-            style={{ fontFamily: 'Inter', fontWeight: 600, fontSize: 'clamp(12px, 1.1vw, 16px)', color: 'rgba(0,0,0,0.45)', textDecoration: 'none', letterSpacing: '0.02em', borderBottom: '1px solid rgba(0,0,0,0.2)', paddingBottom: 2, transition: 'color 0.2s' }}
+            style={{ display: 'inline-block', fontFamily: 'Inter', fontWeight: 600, fontSize: 'clamp(13px, 1.1vw, 16px)', color: 'rgba(0,0,0,0.55)', textDecoration: 'none', letterSpacing: '0.02em', borderBottom: '1px solid rgba(0,0,0,0.2)', paddingBottom: 2, transition: 'color 0.2s' }}
             onMouseEnter={e => e.currentTarget.style.color = '#000'}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.45)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.55)'}
           >
             rahul@rahuldesigns.com
           </a>
+
+          {/* Social links */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(14px, 1.6vw, 24px)', marginTop: 36 }}>
+            {socials.map((s) => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+                style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(0,0,0,0.45)', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#000'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.45)'}
+              >
+                {s.label}
+              </a>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Form */}
+        {/* Part 2 — Query / contact form */}
         <motion.div
-          style={{ marginTop: 64, maxWidth: 560 }}
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.15 }}
         >
+          <p style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 11, letterSpacing: '0.16em', color: 'rgba(0,0,0,0.35)', textTransform: 'uppercase', margin: '0 0 24px' }}>
+            For any queries
+          </p>
           {sent ? (
             <motion.div initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 12, padding: '40px 0' }}
@@ -120,19 +142,6 @@ export default function Footer() {
         transition={{ duration: 0.6, delay: 0.3 }}
       >
         <span style={{ fontFamily: '"Bebas Neue"', fontSize: 28, letterSpacing: '0.1em', color: '#000' }}>RAHUL.</span>
-
-        <div style={{ display: 'flex', gap: 28 }}>
-          {socials.map((s) => (
-            <a key={s.label} href={s.href}
-              style={{ fontFamily: 'Inter', fontWeight: 600, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(0,0,0,0.35)', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#000'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.35)'}
-            >
-              {s.label}
-            </a>
-          ))}
-        </div>
-
         <span style={{ fontFamily: 'Inter', fontSize: 11, color: 'rgba(0,0,0,0.3)', letterSpacing: '0.04em' }}>
           © 2024 Rahul — All rights reserved
         </span>

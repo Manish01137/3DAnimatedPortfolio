@@ -65,6 +65,24 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover { background: #444; }
 
+/* ── Footer two-part layout ── */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 90px);
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 56px; }
+}
+
+/* ── Project detail prev/next: stack on small screens ── */
+@media (max-width: 640px) {
+  .pd-prevnext { grid-template-columns: 1fr !important; }
+  .pd-prevnext > button { border-right: none !important; align-items: center !important; text-align: center !important; }
+  .pd-prevnext > button:first-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+}
+
 /* ── GSAP pinned section fix ── */
 .gsap-marker-start, .gsap-marker-end, .gsap-marker-scroller-start, .gsap-marker-scroller-end {
   display: none !important;

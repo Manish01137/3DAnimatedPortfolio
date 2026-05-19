@@ -39,6 +39,7 @@ export default function WorkExperience() {
           color: 'rgba(255,255,255,0.4)',
           textTransform: 'uppercase',
           margin: '0 0 18px',
+          textAlign: 'center',
         }}
       >
         Career Journey
@@ -59,6 +60,7 @@ export default function WorkExperience() {
           lineHeight: 0.92,
           letterSpacing: '-0.02em',
           userSelect: 'none',
+          textAlign: 'center',
         }}
       >
         WORK<br />EXPERIENCE
@@ -70,6 +72,8 @@ export default function WorkExperience() {
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))',
           gap: 'clamp(16px, 1.8vw, 26px)',
+          maxWidth: 1240,
+          margin: '0 auto',
         }}
       >
         {jobs.map((j, i) => (
@@ -91,6 +95,7 @@ export default function WorkExperience() {
               transition: 'transform 0.45s cubic-bezier(0.16,1,0.3,1), background 0.4s, border-color 0.4s',
               borderColor: hover === i ? 'rgba(255,255,255,0.22)' : 'rgba(255,255,255,0.1)',
               cursor: 'none',
+              textAlign: 'center',
             }}
           >
             <span style={{
@@ -108,8 +113,7 @@ export default function WorkExperience() {
             <h3 style={{
               fontFamily: 'Inter', fontWeight: 700,
               fontSize: 'clamp(18px, 1.7vw, 24px)',
-              color: '#fff', margin: '0 0 6px',
-              paddingRight: 36,
+              color: '#fff', margin: '24px 0 6px',
             }}>
               {j.company}
             </h3>
@@ -126,7 +130,7 @@ export default function WorkExperience() {
               fontSize: 'clamp(12px, 1vw, 14px)',
               color: j.current ? '#fff' : 'rgba(255,255,255,0.6)',
               margin: 0, lineHeight: 1.6,
-              display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap',
             }}>
               {j.current && (
                 <span style={{

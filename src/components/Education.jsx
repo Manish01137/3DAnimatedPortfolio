@@ -49,6 +49,7 @@ export default function Education() {
           color: 'rgba(255,255,255,0.4)',
           textTransform: 'uppercase',
           margin: '0 0 18px',
+          textAlign: 'center',
         }}
       >
         Academics
@@ -70,57 +71,31 @@ export default function Education() {
           lineHeight: 0.9,
           letterSpacing: '-0.02em',
           userSelect: 'none',
+          textAlign: 'center',
         }}
       >
         EDUCATION
       </motion.h2>
 
-      {/* Timeline */}
-      <div style={{ maxWidth: 1100, position: 'relative' }}>
-        {/* Vertical line */}
-        <motion.div
-          initial={{ scaleY: 0 }}
-          animate={inView ? { scaleY: 1 } : {}}
-          transition={{ duration: 1.1, ease, delay: 0.2 }}
-          style={{
-            position: 'absolute',
-            left: 9, top: 8, bottom: 8,
-            width: 2,
-            background: 'linear-gradient(180deg,rgba(255,255,255,0.5),rgba(255,255,255,0.08))',
-            transformOrigin: 'top',
-          }}
-        />
-
+      {/* Centered list */}
+      <div style={{ maxWidth: 880, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 4.5vh, 48px)' }}>
         {items.map((it, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, x: 24 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease, delay: 0.3 + i * 0.12 }}
-            style={{
-              position: 'relative',
-              paddingLeft: 44,
-              paddingBottom: i === items.length - 1 ? 0 : 'clamp(36px, 5vh, 56px)',
-            }}
+            style={{ textAlign: 'center' }}
           >
-            {/* Dot */}
             <span
               style={{
-                position: 'absolute',
-                left: 0, top: 4,
-                width: 20, height: 20,
-                borderRadius: '50%',
-                background: '#000',
-                border: '2px solid #fff',
+                display: 'inline-block',
+                width: 16, height: 16, borderRadius: '50%',
+                background: '#000', border: '2px solid #fff',
                 boxShadow: '0 0 0 4px rgba(255,255,255,0.06)',
+                marginBottom: 16,
               }}
-            >
-              <span style={{
-                position: 'absolute', inset: 4,
-                borderRadius: '50%', background: '#fff',
-              }} />
-            </span>
-
+            />
             <h3 style={{
               fontFamily: 'Inter', fontWeight: 700,
               fontSize: 'clamp(16px, 1.5vw, 21px)',

@@ -115,12 +115,12 @@ function ServiceRow({ s, i, hovered, setHovered, inView }) {
       <div style={{ overflow: 'hidden' }}>
         <h3
           style={{
-            fontFamily: 'Inter',
-            fontWeight: 900,
+            fontFamily: '"Bowlby One", sans-serif',
+            fontWeight: 400,
             fontSize: 'clamp(20px, 2.1vw, 30px)',
             color: '#000',
-            margin: 0, lineHeight: 1.1,
-            letterSpacing: '0.02em',
+            margin: 0, lineHeight: 1.15,
+            letterSpacing: '0.01em',
             textTransform: 'uppercase',
             transform: isActive ? 'translateX(12px)' : 'translateX(0)',
             transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',

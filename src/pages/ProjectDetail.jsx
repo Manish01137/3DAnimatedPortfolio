@@ -113,7 +113,7 @@ export default function ProjectDetail() {
         }} />
 
         <motion.div
-          style={{ position: 'absolute', left: 0, right: 0, bottom: '8vh', padding: '0 6vw', y: titleY }}
+          style={{ position: 'absolute', left: 0, right: 0, bottom: '8vh', padding: '0 6vw', textAlign: 'center', y: titleY }}
         >
           <motion.p
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -162,13 +162,13 @@ export default function ProjectDetail() {
 
       {/* Intro / description */}
       <section style={{ padding: 'clamp(80px, 12vh, 160px) 6vw', maxWidth: 1320, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', gap: 40 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', gap: 40, textAlign: 'center', justifyItems: 'center' }}>
           <motion.h2
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             style={{
               fontFamily: '"Bebas Neue"', fontSize: 'clamp(32px, 5vw, 72px)',
-              color: '#fff', margin: 0, lineHeight: 1.05, maxWidth: 1000,
+              color: '#fff', margin: '0 auto', lineHeight: 1.05, maxWidth: 1000,
             }}
           >
             {project.title}
@@ -178,7 +178,7 @@ export default function ProjectDetail() {
             viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}
             style={{
               fontFamily: 'Inter', fontSize: 'clamp(15px, 1.2vw, 18px)',
-              color: 'rgba(255,255,255,0.62)', margin: 0,
+              color: 'rgba(255,255,255,0.62)', margin: '0 auto',
               lineHeight: 1.85, maxWidth: 820,
             }}
           >
@@ -187,7 +187,7 @@ export default function ProjectDetail() {
           <motion.div
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15 }}
-            style={{ display: 'flex', flexWrap: 'wrap', gap: 40, borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 32 }}
+            style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 40, borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 32, width: '100%' }}
           >
             {[
               ['Client', project.client],
@@ -195,7 +195,7 @@ export default function ProjectDetail() {
               ['Year', project.year],
               ['Discipline', project.category],
             ].map(([k, v]) => (
-              <div key={k} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div key={k} style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
                 <span style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>{k}</span>
                 <span style={{ fontFamily: 'Inter', fontWeight: 600, fontSize: 15, color: '#fff' }}>{v}</span>
               </div>
@@ -212,7 +212,7 @@ export default function ProjectDetail() {
       </section>
 
       {/* Prev / Next */}
-      <section style={{
+      <section className="pd-prevnext" style={{
         display: 'grid', gridTemplateColumns: '1fr 1fr',
         borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: 80,
       }}>

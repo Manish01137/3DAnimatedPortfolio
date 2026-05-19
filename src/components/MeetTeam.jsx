@@ -66,7 +66,7 @@ export default function MeetTeam() {
       style={{
         position: 'relative',
         background: '#000',
-        padding: 'clamp(100px, 14vh, 180px) 6vw clamp(110px, 15vh, 190px)',
+        padding: 'clamp(100px, 14vh, 180px) clamp(16px, 2.5vw, 40px) clamp(110px, 15vh, 190px)',
         overflow: 'hidden',
       }}
     >
@@ -119,7 +119,7 @@ export default function MeetTeam() {
         ref={frameRef}
         style={{
           position: 'relative', zIndex: 2,
-          maxWidth: 1520, margin: '0 auto',
+          maxWidth: 1820, margin: '0 auto',
           borderRadius: 24, overflow: 'hidden',
           border: '1px solid rgba(255,255,255,0.12)',
           boxShadow: '0 60px 140px -40px rgba(168,85,247,0.35), 0 30px 80px -30px rgba(0,0,0,0.9)',

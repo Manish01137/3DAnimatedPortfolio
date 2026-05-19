@@ -107,6 +107,7 @@ export default function Skills() {
           color: 'rgba(255,255,255,0.4)',
           textTransform: 'uppercase',
           margin: '0 0 18px',
+          textAlign: 'center',
         }}
       >
         Tools I Use Daily
@@ -127,6 +128,7 @@ export default function Skills() {
           lineHeight: 0.92,
           letterSpacing: '-0.02em',
           userSelect: 'none',
+          textAlign: 'center',
         }}
       >
         SKILLS,<br />SOFTWARE
@@ -141,6 +143,7 @@ export default function Skills() {
           fontSize: 'clamp(12px, 1vw, 14px)',
           color: 'rgba(255,255,255,0.4)',
           margin: '0 0 clamp(48px, 7vh, 80px)',
+          textAlign: 'center',
         }}
       >
         Percentage based on how much I used this software till date.
@@ -152,6 +155,9 @@ export default function Skills() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))',
           columnGap: 'clamp(40px, 6vw, 100px)',
           rowGap: 'clamp(48px, 7vh, 72px)',
+          maxWidth: 1100,
+          margin: '0 auto',
+          width: '100%',
         }}
       >
         {groups.map((g, gi) => (
@@ -165,6 +171,7 @@ export default function Skills() {
               fontFamily: 'Inter', fontWeight: 700,
               fontSize: 'clamp(17px, 1.5vw, 21px)',
               color: '#fff', margin: '0 0 28px',
+              textAlign: 'center',
             }}>
               {g.title}
             </h3>

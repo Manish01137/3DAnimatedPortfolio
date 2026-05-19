@@ -122,7 +122,7 @@ function Track({ items, reverse = false, pxPerSecond = 60 }) {
 
 export default function Marquee() {
   return (
-    <section style={{ background: '#000', padding: '80px 0', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+    <section style={{ background: '#000', padding: '80px 0 40px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
       <div style={{ textAlign: 'center', marginBottom: 48 }}>
         <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 11, letterSpacing: '0.16em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', margin: 0 }}>
           Trusted by 50+ brands worldwide
