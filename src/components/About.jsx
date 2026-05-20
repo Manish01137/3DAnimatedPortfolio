@@ -44,10 +44,11 @@ export default function About() {
         overflow: 'hidden',
       }}
     >
-      {/* ── Floating 3D props ── */}
+      {/* ── Floating 3D props (desktop only — hidden on mobile to keep copy readable) ── */}
       {props.map((p, i) => (
         <div
           key={i}
+          className="about-emoji"
           style={{
             position: 'absolute',
             top: p.top, left: p.left, right: p.right,

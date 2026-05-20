@@ -53,10 +53,6 @@ export default function Footer() {
       <div className="footer-emoji" style={{ position: 'absolute', top: 32, right: 40, width: 110, height: 110, animation: 'floatY 4s ease-in-out infinite', pointerEvents: 'none', zIndex: 2 }}>
         <img src="https://em-content.zobj.net/source/apple/391/high-voltage_26a1.png" alt="" style={{ width: '100%', filter: 'drop-shadow(0 8px 24px rgba(234,179,8,0.35))' }} />
       </div>
-      <div className="footer-emoji" style={{ position: 'absolute', bottom: 140, left: 32, width: 90, height: 90, animation: 'floatY2 5.5s ease-in-out infinite', pointerEvents: 'none', zIndex: 2 }}>
-        <img src="https://em-content.zobj.net/source/apple/391/chains_26d3-fe0f.png" alt="" style={{ width: '100%', filter: 'hue-rotate(260deg) drop-shadow(0 4px 14px rgba(168,85,247,0.4))' }} />
-      </div>
-
       {/* ── One container, two parts ── */}
       <div
         className="footer-grid"

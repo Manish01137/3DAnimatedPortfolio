@@ -70,6 +70,17 @@ body {
   .pd-gallery > * { grid-column: span 12 !important; aspect-ratio: 4 / 3 !important; }
 }
 
+/* ── About section: hide floating 3D emoji props on mobile so they don't cover the copy ── */
+@media (max-width: 768px) {
+  .about-emoji { display: none !important; }
+  .footer-emoji { display: none !important; }
+}
+
+/* ── Project detail: 2-up grids collapse on mobile ── */
+@media (max-width: 700px) {
+  .pd-pair { grid-template-columns: 1fr !important; }
+}
+
 /* ── All Work page grid: full-width tiles on mobile ── */
 @media (max-width: 640px) {
   .wp-grid > * { grid-column: span 12 !important; }

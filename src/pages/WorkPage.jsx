@@ -18,6 +18,7 @@ const sizes = [
 
 function Tile({ p, size, index, navigate }) {
   const [hover, setHover] = useState(false)
+  const [muted, setMuted] = useState(true)
   const videoRef = useRef(null)
   const isVideo = p.type === 'video'
 
@@ -33,6 +34,19 @@ function Tile({ p, size, index, navigate }) {
       videoRef.current.pause()
       videoRef.current.currentTime = 0
     }
+  }
+
+  const toggleMute = (e) => {
+    e.stopPropagation()
+    setMuted((v) => {
+      const next = !v
+      if (videoRef.current) {
+        videoRef.current.muted = next
+        // Make sure the reel keeps playing while the user listens
+        videoRef.current.play().catch(() => {})
+      }
+      return next
+    })
   }
 
   return (
@@ -61,7 +75,7 @@ function Tile({ p, size, index, navigate }) {
           <video
             ref={videoRef}
             src={p.videos[0]}
-            muted
+            muted={muted}
             loop
             playsInline
             preload="metadata"
@@ -109,6 +123,27 @@ function Tile({ p, size, index, navigate }) {
             marginLeft: 4,
           }} />
         </div>
+      )}
+
+      {/* Mute / Unmute toggle for reels */}
+      {isVideo && (
+        <button
+          type="button"
+          data-cursor
+          aria-label={muted ? 'Unmute reel' : 'Mute reel'}
+          onClick={toggleMute}
+          style={{
+            position: 'absolute', top: 14, right: 14,
+            width: 40, height: 40, borderRadius: '50%',
+            background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            color: '#fff', fontSize: 16, cursor: 'none',
+            zIndex: 4,
+          }}
+        >
+          {muted ? '🔇' : '🔊'}
+        </button>
       )}
 
       {/* Accent wash */}
