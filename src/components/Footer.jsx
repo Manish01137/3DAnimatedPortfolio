@@ -9,20 +9,51 @@ const socials = [
   { label: 'Behance',   href: 'https://www.behance.net/mksrahulrai' },
 ]
 
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/designethical0@gmail.com'
+
 export default function Footer() {
   const ref    = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle')  // 'idle' | 'sending' | 'sent' | 'error'
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
+
+  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    if (status === 'sending') return
+    setStatus('sending')
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          message: form.message,
+          _subject: `New portfolio enquiry from ${form.name}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      })
+      if (!res.ok) throw new Error('Network error')
+      setStatus('sent')
+      setForm({ name: '', email: '', phone: '', message: '' })
+    } catch (err) {
+      setStatus('error')
+    }
+  }
 
   return (
     <footer id="contact" ref={ref}
       style={{ background: '#fff', position: 'relative', overflow: 'hidden' }}
     >
-      {/* Floating 3D objects */}
-      <div style={{ position: 'absolute', top: 32, right: 40, width: 110, height: 110, animation: 'floatY 4s ease-in-out infinite', pointerEvents: 'none', zIndex: 2 }}>
+      {/* Floating 3D objects (desktop-only) */}
+      <div className="footer-emoji" style={{ position: 'absolute', top: 32, right: 40, width: 110, height: 110, animation: 'floatY 4s ease-in-out infinite', pointerEvents: 'none', zIndex: 2 }}>
         <img src="https://em-content.zobj.net/source/apple/391/high-voltage_26a1.png" alt="" style={{ width: '100%', filter: 'drop-shadow(0 8px 24px rgba(234,179,8,0.35))' }} />
       </div>
-      <div style={{ position: 'absolute', bottom: 140, left: 32, width: 90, height: 90, animation: 'floatY2 5.5s ease-in-out infinite', pointerEvents: 'none', zIndex: 2 }}>
+      <div className="footer-emoji" style={{ position: 'absolute', bottom: 140, left: 32, width: 90, height: 90, animation: 'floatY2 5.5s ease-in-out infinite', pointerEvents: 'none', zIndex: 2 }}>
         <img src="https://em-content.zobj.net/source/apple/391/chains_26d3-fe0f.png" alt="" style={{ width: '100%', filter: 'hue-rotate(260deg) drop-shadow(0 4px 14px rgba(168,85,247,0.4))' }} />
       </div>
 
@@ -49,12 +80,12 @@ export default function Footer() {
           }}>
             LET'S<br />GET IN<br />TOUCH
           </h2>
-          <a href="mailto:rahul@rahuldesigns.com"
+          <a href="mailto:designethical0@gmail.com"
             style={{ display: 'inline-block', fontFamily: 'Inter', fontWeight: 600, fontSize: 'clamp(13px, 1.1vw, 16px)', color: 'rgba(0,0,0,0.55)', textDecoration: 'none', letterSpacing: '0.02em', borderBottom: '1px solid rgba(0,0,0,0.2)', paddingBottom: 2, transition: 'color 0.2s' }}
             onMouseEnter={e => e.currentTarget.style.color = '#000'}
             onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.55)'}
           >
-            rahul@rahuldesigns.com
+            designethical0@gmail.com
           </a>
 
           {/* Social links */}
@@ -80,7 +111,7 @@ export default function Footer() {
           <p style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 11, letterSpacing: '0.16em', color: 'rgba(0,0,0,0.35)', textTransform: 'uppercase', margin: '0 0 24px' }}>
             For any queries
           </p>
-          {sent ? (
+          {status === 'sent' ? (
             <motion.div initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 12, padding: '40px 0' }}
             >
@@ -89,46 +120,51 @@ export default function Footer() {
               <p style={{ fontFamily: 'Inter', color: 'rgba(0,0,0,0.45)', fontSize: 14 }}>I'll get back to you within 24 hours.</p>
             </motion.div>
           ) : (
-            <form onSubmit={e => { e.preventDefault(); setSent(true) }} style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-              {[
-                { placeholder: 'Full Name *',  type: 'text',  required: true },
-                { placeholder: 'Email *',       type: 'email', required: true },
-                { placeholder: 'Phone',         type: 'tel',   required: false },
-              ].map((f) => (
-                <input key={f.placeholder} type={f.type} placeholder={f.placeholder} required={f.required}
-                  style={{
-                    width: '100%', background: 'transparent',
-                    border: 'none', borderBottom: '1px solid rgba(0,0,0,0.15)',
-                    padding: '16px 0', fontFamily: 'Inter', fontSize: 14, color: '#000',
-                    outline: 'none',
-                  }}
-                  onFocus={e => e.currentTarget.style.borderBottomColor = '#000'}
-                  onBlur={e => e.currentTarget.style.borderBottomColor = 'rgba(0,0,0,0.15)'}
-                />
-              ))}
-              <textarea placeholder="Your message" rows={4} required
-                style={{
-                  width: '100%', background: 'transparent',
-                  border: 'none', borderBottom: '1px solid rgba(0,0,0,0.15)',
-                  padding: '16px 0', fontFamily: 'Inter', fontSize: 14, color: '#000',
-                  outline: 'none', resize: 'none', marginTop: 0,
-                }}
+            <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <input type="text" name="name" placeholder="Full Name *" required value={form.name} onChange={onChange}
+                style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.15)', padding: '16px 0', fontFamily: 'Inter', fontSize: 14, color: '#000', outline: 'none' }}
                 onFocus={e => e.currentTarget.style.borderBottomColor = '#000'}
                 onBlur={e => e.currentTarget.style.borderBottomColor = 'rgba(0,0,0,0.15)'}
               />
-              <motion.button type="submit"
+              <input type="email" name="email" placeholder="Email *" required value={form.email} onChange={onChange}
+                style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.15)', padding: '16px 0', fontFamily: 'Inter', fontSize: 14, color: '#000', outline: 'none' }}
+                onFocus={e => e.currentTarget.style.borderBottomColor = '#000'}
+                onBlur={e => e.currentTarget.style.borderBottomColor = 'rgba(0,0,0,0.15)'}
+              />
+              <input type="tel" name="phone" placeholder="Phone" value={form.phone} onChange={onChange}
+                style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.15)', padding: '16px 0', fontFamily: 'Inter', fontSize: 14, color: '#000', outline: 'none' }}
+                onFocus={e => e.currentTarget.style.borderBottomColor = '#000'}
+                onBlur={e => e.currentTarget.style.borderBottomColor = 'rgba(0,0,0,0.15)'}
+              />
+              <textarea name="message" placeholder="Your message" rows={4} required value={form.message} onChange={onChange}
+                style={{ width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.15)', padding: '16px 0', fontFamily: 'Inter', fontSize: 14, color: '#000', outline: 'none', resize: 'none', marginTop: 0 }}
+                onFocus={e => e.currentTarget.style.borderBottomColor = '#000'}
+                onBlur={e => e.currentTarget.style.borderBottomColor = 'rgba(0,0,0,0.15)'}
+              />
+              {/* Honeypot — bots fill this, humans don't see it */}
+              <input type="text" name="_honey" tabIndex="-1" autoComplete="off"
+                style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }} />
+
+              <motion.button type="submit" disabled={status === 'sending'}
                 style={{
                   marginTop: 32, alignSelf: 'flex-start',
                   padding: '14px 40px', borderRadius: 9999, border: 'none',
-                  background: '#000', color: '#fff',
+                  background: status === 'sending' ? '#444' : '#000', color: '#fff',
                   fontFamily: 'Inter', fontWeight: 800, fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase',
-                  cursor: 'none',
+                  cursor: status === 'sending' ? 'wait' : 'none',
+                  opacity: status === 'sending' ? 0.8 : 1,
                 }}
-                whileHover={{ background: 'linear-gradient(135deg, #a855f7, #ec4899)', scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={status === 'sending' ? {} : { background: 'linear-gradient(135deg, #a855f7, #ec4899)', scale: 1.03 }}
+                whileTap={status === 'sending' ? {} : { scale: 0.97 }}
               >
-                Send Message
+                {status === 'sending' ? 'Sending…' : 'Send Message'}
               </motion.button>
+
+              {status === 'error' && (
+                <p style={{ marginTop: 14, fontFamily: 'Inter', fontSize: 12, color: '#dc2626' }}>
+                  Could not send. Please try again or email designethical0@gmail.com directly.
+                </p>
+              )}
             </form>
           )}
         </motion.div>
@@ -143,7 +179,7 @@ export default function Footer() {
       >
         <span style={{ fontFamily: '"Bebas Neue"', fontSize: 28, letterSpacing: '0.1em', color: '#000' }}>RAHUL.</span>
         <span style={{ fontFamily: 'Inter', fontSize: 11, color: 'rgba(0,0,0,0.3)', letterSpacing: '0.04em' }}>
-          © 2024 Rahul — All rights reserved
+          © 2026 Rahul — All rights reserved
         </span>
       </motion.div>
     </footer>

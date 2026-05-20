@@ -3,7 +3,20 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { projects, getProject, getProjectIndex } from '../data/projects'
 
-function RevealImage({ src, alt, accent }) {
+/* Editorial rhythm — cycles for variable image counts.
+   Each entry: { col: 1-12 grid columns, ratio: aspect ratio } */
+const editorial = [
+  { col: 7,  ratio: '4 / 3'   },
+  { col: 5,  ratio: '4 / 5'   },
+  { col: 12, ratio: '21 / 9'  },
+  { col: 5,  ratio: '4 / 5'   },
+  { col: 7,  ratio: '4 / 3'   },
+  { col: 6,  ratio: '1 / 1'   },
+  { col: 6,  ratio: '1 / 1'   },
+  { col: 12, ratio: '16 / 9'  },
+]
+
+function RevealImage({ src, alt, accent, col, ratio }) {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
@@ -13,13 +26,14 @@ function RevealImage({ src, alt, accent }) {
       ref={ref}
       initial={{ clipPath: 'inset(12% 12% 12% 12% round 20px)', opacity: 0.4 }}
       whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 20px)', opacity: 1 }}
-      viewport={{ once: true, margin: '-100px' }}
+      viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       style={{
+        gridColumn: `span ${col}`,
         position: 'relative', overflow: 'hidden', borderRadius: 20,
         border: '1px solid rgba(255,255,255,0.08)',
         boxShadow: `0 50px 110px -50px ${accent}55`,
-        aspectRatio: '16 / 10',
+        aspectRatio: ratio,
       }}
     >
       <motion.img
@@ -204,11 +218,28 @@ export default function ProjectDetail() {
         </div>
       </section>
 
-      {/* Gallery — remaining images large */}
-      <section style={{ padding: '0 6vw 60px', maxWidth: 1560, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 5vh, 64px)' }}>
-        {project.images.slice(1).map((src, i) => (
-          <RevealImage key={i} src={src} alt={`${project.name} ${i + 2}`} accent={project.accent} />
-        ))}
+      {/* Gallery — editorial grid (varied row layouts) */}
+      <section
+        className="pd-gallery"
+        style={{
+          padding: '0 6vw 60px', maxWidth: 1560, margin: '0 auto',
+          display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)',
+          gap: 'clamp(16px, 2.2vw, 32px)',
+        }}
+      >
+        {project.images.slice(1).map((src, i) => {
+          const e = editorial[i % editorial.length]
+          return (
+            <RevealImage
+              key={i}
+              src={src}
+              alt={`${project.name} ${i + 2}`}
+              accent={project.accent}
+              col={e.col}
+              ratio={e.ratio}
+            />
+          )
+        })}
       </section>
 
       {/* Prev / Next */}

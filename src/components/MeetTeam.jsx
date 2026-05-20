@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -19,6 +19,20 @@ export default function MeetTeam() {
   const frameRef  = useRef(null)
   const imgRef    = useRef(null)
   const inView    = useInView(ref, { once: true, margin: '-120px' })
+
+  /* Cursor-driven 3D tilt — same effect as the hero cartoon */
+  const spring = { stiffness: 120, damping: 18, mass: 0.6 }
+  const rotX = useSpring(useMotionValue(0), spring)
+  const rotY = useSpring(useMotionValue(0), spring)
+  const handleTilt = (e) => {
+    const r = frameRef.current?.getBoundingClientRect()
+    if (!r) return
+    const px = (e.clientX - r.left) / r.width - 0.5
+    const py = (e.clientY - r.top) / r.height - 0.5
+    rotY.set(px * 14)
+    rotX.set(py * -10)
+  }
+  const resetTilt = () => { rotX.set(0); rotY.set(0) }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -114,35 +128,47 @@ export default function MeetTeam() {
         THE&nbsp;CREW
       </motion.h2>
 
-      {/* Image frame with cinematic reveal */}
+      {/* 3D-tilt wrapper (perspective lives here) */}
       <div
-        ref={frameRef}
+        onMouseMove={handleTilt}
+        onMouseLeave={resetTilt}
         style={{
           position: 'relative', zIndex: 2,
           maxWidth: 1820, margin: '0 auto',
-          borderRadius: 24, overflow: 'hidden',
-          border: '1px solid rgba(255,255,255,0.12)',
-          boxShadow: '0 60px 140px -40px rgba(168,85,247,0.35), 0 30px 80px -30px rgba(0,0,0,0.9)',
-          willChange: 'clip-path',
+          perspective: 1400,
         }}
       >
-        <div style={{ overflow: 'hidden', aspectRatio: '705 / 421' }}>
-          <img
-            ref={imgRef}
-            src={teamImg}
-            alt="Meet Rahul and the creative team"
-            draggable={false}
-            style={{
-              width: '100%', height: '100%', objectFit: 'cover',
-              display: 'block', willChange: 'transform', userSelect: 'none',
-            }}
-          />
-        </div>
-        {/* Subtle vignette for premium depth */}
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.35) 100%)',
-        }} />
+        {/* Image frame with cinematic reveal + cursor tilt */}
+        <motion.div
+          ref={frameRef}
+          style={{
+            position: 'relative',
+            borderRadius: 24, overflow: 'hidden',
+            border: '1px solid rgba(255,255,255,0.12)',
+            boxShadow: '0 60px 140px -40px rgba(168,85,247,0.35), 0 30px 80px -30px rgba(0,0,0,0.9)',
+            willChange: 'clip-path, transform',
+            rotateX: rotX, rotateY: rotY,
+            transformStyle: 'preserve-3d', transformPerspective: 1400,
+          }}
+        >
+          <div style={{ overflow: 'hidden', aspectRatio: '705 / 421' }}>
+            <img
+              ref={imgRef}
+              src={teamImg}
+              alt="Meet Rahul and the creative team"
+              draggable={false}
+              style={{
+                width: '100%', height: '100%', objectFit: 'cover',
+                display: 'block', willChange: 'transform', userSelect: 'none',
+              }}
+            />
+          </div>
+          {/* Subtle vignette for premium depth */}
+          <div style={{
+            position: 'absolute', inset: 0, pointerEvents: 'none',
+            background: 'radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.35) 100%)',
+          }} />
+        </motion.div>
       </div>
 
       {/* Discipline tags */}

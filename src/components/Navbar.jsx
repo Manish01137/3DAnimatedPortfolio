@@ -50,20 +50,21 @@ export default function Navbar() {
         <a
           href="/"
           onClick={(e) => { e.preventDefault(); setOpen(false); navigate('/') }}
-          className="font-bebas text-white text-2xl tracking-widest relative z-50"
-          style={{ cursor: 'none' }}
+          className="text-white text-2xl tracking-widest relative z-50"
+          style={{ cursor: 'none', fontFamily: '"Bowlby One", sans-serif' }}
         >
           RAHUL.
         </a>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex gap-12">
+        <ul className="hidden md:flex gap-10">
           {links.map((l) => (
             <li key={l}>
               <a
                 href={`/#${l.toLowerCase()}`}
                 onClick={(e) => go(e, l.toLowerCase())}
-                className="text-white/70 hover:text-white font-inter text-sm font-semibold tracking-widest uppercase transition-colors duration-200"
+                className="text-white/75 hover:text-white uppercase transition-colors duration-200"
+                style={{ fontFamily: '"Bowlby One", sans-serif', fontSize: 13, letterSpacing: '0.08em' }}
               >
                 {l}
               </a>
@@ -73,7 +74,8 @@ export default function Navbar() {
         <a
           href="/#contact"
           onClick={(e) => go(e, 'contact')}
-          className="hidden md:block font-inter font-bold text-sm uppercase tracking-wider text-white px-6 py-2 rounded-full border border-white/30 hover:border-white transition-all duration-300 hover:bg-white hover:text-black"
+          className="hidden md:block uppercase text-white px-6 py-2 rounded-full border border-white/30 hover:border-white transition-all duration-300 hover:bg-white hover:text-black"
+          style={{ fontFamily: '"Bowlby One", sans-serif', fontSize: 12, letterSpacing: '0.1em' }}
         >
           Hire Me
         </a>
@@ -224,8 +226,8 @@ export default function Navbar() {
                   marginTop: 32,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   padding: '18px 28px', borderRadius: 9999,
-                  fontFamily: 'Inter', fontWeight: 900, fontSize: 12,
-                  letterSpacing: '0.16em', textTransform: 'uppercase',
+                  fontFamily: '"Bowlby One", sans-serif', fontSize: 13,
+                  letterSpacing: '0.1em', textTransform: 'uppercase',
                   color: '#fff', textDecoration: 'none',
                   background: 'linear-gradient(135deg,#a855f7,#ec4899,#f59e0b)',
                   boxShadow: '0 16px 40px -14px rgba(236,72,153,0.6)',
@@ -256,9 +258,9 @@ export default function Navbar() {
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
-                        fontFamily: 'Inter', fontWeight: 700, fontSize: 12,
-                        letterSpacing: '0.08em', textTransform: 'uppercase',
-                        color: 'rgba(255,255,255,0.7)', textDecoration: 'none',
+                        fontFamily: '"Bowlby One", sans-serif', fontSize: 12,
+                        letterSpacing: '0.06em', textTransform: 'uppercase',
+                        color: 'rgba(255,255,255,0.8)', textDecoration: 'none',
                       }}
                     >
                       {label}

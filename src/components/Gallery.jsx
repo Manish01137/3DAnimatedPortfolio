@@ -72,18 +72,10 @@ export default function Gallery() {
         overflow: 'hidden',
       }}
     >
-      {/* Tilted, continuously moving two-row showcase */}
-      <div
-        style={{
-          transform: 'rotate(-3deg)',
-          width: '116%',
-          marginLeft: '-8%',
-        }}
-      >
-        <Row items={rowTop} />
-        <div style={{ height: 'clamp(12px, 1.4vw, 22px)' }} />
-        <Row items={rowBot} reverse />
-      </div>
+      {/* Flat, continuously moving two-row showcase (marquee style) */}
+      <Row items={rowTop} />
+      <div style={{ height: 'clamp(12px, 1.4vw, 22px)' }} />
+      <Row items={rowBot} reverse />
     </section>
   )
 }
