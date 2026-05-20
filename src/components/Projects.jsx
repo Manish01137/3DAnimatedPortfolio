@@ -92,7 +92,7 @@ export default function Projects() {
           ref={titleRef}
           style={{
             fontFamily: '"Bowlby One", sans-serif',
-            fontSize: 'clamp(64px, 13vw, 200px)',
+            fontSize: 'clamp(36px, 8.8vw, 150px)',
             color: 'rgba(255,255,255,0)',
             WebkitTextStroke: '1.5px #fff',
             margin: 0, lineHeight: 0.92,
@@ -176,7 +176,7 @@ export default function Projects() {
             }}>
 
               {/* Top row: number · CLIENT/name · Live Project */}
-              <div style={{
+              <div className="proj-top-row" style={{
                 display: 'grid',
                 gridTemplateColumns: 'auto 1fr auto',
                 alignItems: 'center',
@@ -238,7 +238,7 @@ export default function Projects() {
               </div>
 
               {/* Image grid: 1 big left + 2 stacked right */}
-              <div style={{
+              <div className="proj-img-grid" style={{
                 display: 'grid',
                 gridTemplateColumns: '2fr 1fr',
                 gap: 14,

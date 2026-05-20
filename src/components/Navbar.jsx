@@ -126,14 +126,15 @@ export default function Navbar() {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="md:hidden fixed top-0 right-0 z-40 h-full flex flex-col"
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="md:hidden fixed top-0 right-0 z-[60] h-screen flex flex-col"
               style={{
-                width: 'min(82vw, 360px)',
-                background: 'linear-gradient(195deg, #141414 0%, #0a0a0a 60%, #000 100%)',
-                borderLeft: '1px solid rgba(255,255,255,0.08)',
-                boxShadow: '-40px 0 90px -30px rgba(168,85,247,0.45)',
-                padding: '110px 34px 40px',
+                width: 'min(86vw, 380px)',
+                background: 'linear-gradient(200deg, #1a1a1a 0%, #0a0a0a 55%, #000 100%)',
+                borderLeft: '1px solid rgba(255,255,255,0.1)',
+                boxShadow: '-40px 0 90px -30px rgba(168,85,247,0.5)',
+                padding: '32px 30px 36px',
+                overflowY: 'auto',
               }}
             >
               {/* Gradient accent edge */}
@@ -142,15 +143,40 @@ export default function Navbar() {
                 background: 'linear-gradient(180deg,#a855f7,#ec4899,#f59e0b)',
               }} />
 
+              {/* Top: brand + close */}
+              <div className="flex items-center justify-between" style={{ marginBottom: 44 }}>
+                <span style={{
+                  fontFamily: '"Bowlby One", sans-serif', fontSize: 22,
+                  color: '#fff', letterSpacing: '0.08em',
+                }}>
+                  RAHUL.
+                </span>
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  onClick={() => setOpen(false)}
+                  style={{
+                    width: 40, height: 40, borderRadius: '50%',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    background: 'rgba(255,255,255,0.04)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: '#fff', fontFamily: 'Inter', fontSize: 18, lineHeight: 1,
+                    cursor: 'pointer',
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+
               <p style={{
                 fontFamily: 'Inter', fontWeight: 700, fontSize: 10,
-                letterSpacing: '0.28em', textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.35)', margin: '0 0 26px',
+                letterSpacing: '0.32em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.4)', margin: '0 0 18px',
               }}>
-                Menu
+                Navigation
               </p>
 
-              <nav className="flex flex-col gap-1">
+              <nav className="flex flex-col">
                 {links.map((l, i) => (
                   <motion.a
                     key={l}
@@ -158,19 +184,29 @@ export default function Navbar() {
                     onClick={(e) => go(e, l.toLowerCase())}
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.12 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                    className="group flex items-baseline gap-3 py-3"
-                    style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+                    transition={{ delay: 0.15 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      display: 'flex', alignItems: 'baseline', gap: 14,
+                      padding: '18px 0',
+                      borderBottom: '1px solid rgba(255,255,255,0.08)',
+                      textDecoration: 'none',
+                    }}
                   >
                     <span style={{
-                      fontFamily: '"JetBrains Mono", monospace', fontSize: 11,
-                      color: 'rgba(255,255,255,0.3)',
+                      fontFamily: '"JetBrains Mono", monospace', fontSize: 12,
+                      color: 'rgba(255,255,255,0.5)',
+                      minWidth: 24,
                     }}>
                       0{i + 1}
                     </span>
                     <span
-                      className="font-bebas uppercase text-white"
-                      style={{ fontSize: 'clamp(30px, 9vw, 44px)', lineHeight: 1.05, letterSpacing: '0.02em' }}
+                      style={{
+                        fontFamily: '"Bowlby One", sans-serif',
+                        fontSize: 'clamp(28px, 8vw, 38px)',
+                        lineHeight: 1.05, letterSpacing: '0.01em',
+                        color: '#ffffff',
+                        textTransform: 'uppercase',
+                      }}
                     >
                       {l}
                     </span>
@@ -183,39 +219,52 @@ export default function Navbar() {
                 onClick={(e) => go(e, 'contact')}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.12 + links.length * 0.07 }}
-                className="mt-8 flex items-center justify-center font-inter font-black uppercase text-white"
+                transition={{ delay: 0.15 + links.length * 0.07 }}
                 style={{
-                  padding: '16px 28px', borderRadius: 9999, fontSize: 12,
-                  letterSpacing: '0.16em',
+                  marginTop: 32,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  padding: '18px 28px', borderRadius: 9999,
+                  fontFamily: 'Inter', fontWeight: 900, fontSize: 12,
+                  letterSpacing: '0.16em', textTransform: 'uppercase',
+                  color: '#fff', textDecoration: 'none',
                   background: 'linear-gradient(135deg,#a855f7,#ec4899,#f59e0b)',
                   boxShadow: '0 16px 40px -14px rgba(236,72,153,0.6)',
                 }}
               >
-                Hire Me
+                Hire Me →
               </motion.a>
 
-              <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-8">
-                {[
-                  ['Instagram', 'https://www.instagram.com/rahulr7988/'],
-                  ['Behance', 'https://www.behance.net/mksrahulrai'],
-                  ['LinkedIn', 'https://www.linkedin.com/in/rahul-r-851076230/'],
-                  ['YouTube', 'https://www.youtube.com/@HindiDreamStorys'],
-                ].map(([label, href]) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontFamily: 'Inter', fontWeight: 600, fontSize: 11,
-                      letterSpacing: '0.08em', textTransform: 'uppercase',
-                      color: 'rgba(255,255,255,0.4)', textDecoration: 'none',
-                    }}
-                  >
-                    {label}
-                  </a>
-                ))}
+              {/* Socials */}
+              <div style={{ marginTop: 'auto', paddingTop: 36 }}>
+                <p style={{
+                  fontFamily: 'Inter', fontWeight: 700, fontSize: 10,
+                  letterSpacing: '0.32em', textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.4)', margin: '0 0 14px',
+                }}>
+                  Follow
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', columnGap: 20, rowGap: 8 }}>
+                  {[
+                    ['Instagram', 'https://www.instagram.com/rahulr7988/'],
+                    ['Behance', 'https://www.behance.net/mksrahulrai'],
+                    ['LinkedIn', 'https://www.linkedin.com/in/rahul-r-851076230/'],
+                    ['YouTube', 'https://www.youtube.com/@HindiDreamStorys'],
+                  ].map(([label, href]) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontFamily: 'Inter', fontWeight: 700, fontSize: 12,
+                        letterSpacing: '0.08em', textTransform: 'uppercase',
+                        color: 'rgba(255,255,255,0.7)', textDecoration: 'none',
+                      }}
+                    >
+                      {label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </motion.aside>
           </>

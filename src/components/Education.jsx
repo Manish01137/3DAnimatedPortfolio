@@ -62,7 +62,7 @@ export default function Education() {
         transition={{ duration: 0.9, ease }}
         style={{
           fontFamily: '"Bowlby One", sans-serif',
-          fontSize: 'clamp(56px, 13vw, 200px)',
+          fontSize: 'clamp(36px, 8.8vw, 150px)',
           background: 'linear-gradient(180deg,#ffffff 0%,#ffffff 38%,#8a8a8a 100%)',
           WebkitBackgroundClip: 'text',
           backgroundClip: 'text',

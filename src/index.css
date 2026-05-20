@@ -65,6 +65,39 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover { background: #444; }
 
+/* ── All Work page grid: full-width tiles on mobile ── */
+@media (max-width: 640px) {
+  .wp-grid > * { grid-column: span 12 !important; }
+}
+
+/* ── Projects: mobile responsiveness ── */
+@media (max-width: 768px) {
+  .proj-card {
+    height: auto !important;
+    padding: 0 16px !important;
+    position: relative !important;
+    margin-bottom: 28px;
+  }
+  .proj-top-row {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    text-align: center;
+  }
+  .proj-top-row > * { justify-self: center; }
+  .proj-img-grid {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    gap: 10px !important;
+  }
+  .proj-img-grid > .tile { aspect-ratio: 16 / 11; }
+  .proj-img-grid > div:not(.tile) {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: auto !important;
+    gap: 10px !important;
+  }
+  .proj-img-grid > div:not(.tile) > .tile { aspect-ratio: 1 / 1; }
+}
+
 /* ── Footer two-part layout ── */
 .footer-grid {
   display: grid;

@@ -288,7 +288,7 @@ export default function Services() {
           ref={titleRef}
           style={{
             fontFamily: '"Bowlby One", sans-serif',
-            fontSize: 'clamp(80px, 14vw, 220px)',
+            fontSize: 'clamp(36px, 8.8vw, 150px)',
             color: 'rgba(10,10,10,0)',
             WebkitTextStroke: '1.5px #0a0a0a',
             margin: 0, lineHeight: 0.9,

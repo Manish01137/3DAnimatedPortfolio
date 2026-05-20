@@ -179,9 +179,9 @@ export default function Hero() {
         illustration & social media design.
       </motion.p>
 
-      {/* ── CTA BUTTON – right side (original position) ── */}
+      {/* ── CTA BUTTON – right side, closer to the cartoon ── */}
       <motion.div
-        style={{ position: 'absolute', right: '4.5vw', top: '46%', translateY: '-50%', zIndex: 20 }}
+        style={{ position: 'absolute', right: 'clamp(80px, 14vw, 240px)', top: '52%', translateY: '-50%', zIndex: 20 }}
         initial={{ opacity: 0, x: 24 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, delay: 0.55, ease }}

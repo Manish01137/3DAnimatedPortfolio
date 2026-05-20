@@ -228,7 +228,7 @@ export default function WorkPage() {
           transition={{ delay: 0.78, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           style={{
             fontFamily: '"Bowlby One", sans-serif',
-            fontSize: 'clamp(64px, 15vw, 240px)',
+            fontSize: 'clamp(36px, 8.8vw, 150px)',
             color: 'transparent',
             WebkitTextStroke: '1.5px #fff',
             margin: 0, lineHeight: 0.9, letterSpacing: '-0.02em',
@@ -279,6 +279,7 @@ export default function WorkPage() {
       }}>
         <motion.div
           layout
+          className="wp-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(12, 1fr)',

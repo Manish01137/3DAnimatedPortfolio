@@ -104,7 +104,7 @@ export default function MeetTeam() {
           position: 'relative', zIndex: 2,
           textAlign: 'center', margin: '0 0 clamp(40px, 6vh, 72px)',
           fontFamily: '"Bowlby One", sans-serif',
-          fontSize: 'clamp(48px, 9vw, 150px)',
+          fontSize: 'clamp(36px, 8.8vw, 150px)',
           lineHeight: 0.92, letterSpacing: '-0.02em',
           color: 'transparent',
           WebkitTextStroke: '1.5px rgba(255,255,255,0.85)',

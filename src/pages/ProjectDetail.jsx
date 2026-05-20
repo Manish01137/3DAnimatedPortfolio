@@ -131,7 +131,7 @@ export default function ProjectDetail() {
             transition={{ delay: 0.88, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             style={{
               fontFamily: '"Bowlby One", sans-serif',
-              fontSize: 'clamp(48px, 9vw, 170px)',
+              fontSize: 'clamp(36px, 8.8vw, 150px)',
               color: '#fff', margin: 0, lineHeight: 0.9, letterSpacing: '-0.02em',
             }}
           >

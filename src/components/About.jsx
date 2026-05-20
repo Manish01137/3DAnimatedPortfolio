@@ -68,7 +68,7 @@ export default function About() {
         ref={titleRef}
         style={{
           fontFamily: '"Bowlby One", sans-serif',
-          fontSize: 'clamp(64px, 13vw, 200px)',
+          fontSize: 'clamp(36px, 8.8vw, 150px)',
           color: 'rgba(255,255,255,0)',
           WebkitTextStroke: '1.5px #fff',
           margin: 0, lineHeight: 0.92,
