@@ -19,6 +19,11 @@ const reelGlob = import.meta.glob(
   '../assets/Project images and content/Video Editing/*.mp4',
   { eager: true, import: 'default' },
 )
+/* New cover banners for Graphic Design projects (1.jpg → project 1, etc.) */
+const gdBannerGlob = import.meta.glob(
+  '../assets/Project image/*.{jpg,jpeg,png,webp}',
+  { eager: true, import: 'default' },
+)
 
 /* Group `.../<folder>/<n>.webp` → ordered arrays, sorted by folder then n */
 function groupByFolder(glob) {
@@ -38,6 +43,13 @@ function groupByFolder(glob) {
 
 const gdImages = groupByFolder(gdGlob)
 const uxImages = groupByFolder(uxGlob)
+
+/* Resolve banner overrides: filename "1.jpg" → index 0, "2.jpg" → index 1, ... */
+const gdBanners = []
+for (const path in gdBannerGlob) {
+  const m = path.match(/\/(\d+)\.(?:jpg|jpeg|png|webp)$/i)
+  if (m) gdBanners[Number(m[1]) - 1] = gdBannerGlob[path]
+}
 
 /* Map reel basename → resolved url */
 const reelByName = {}
@@ -154,14 +166,22 @@ const reelMeta = [
 let n = 0
 const pad = () => String(++n).padStart(2, '0')
 
-const graphicProjects = graphicMeta.map((m, i) => ({
-  ...m,
-  num: pad(),
-  category: 'Graphic Design',
-  tag: 'GRAPHIC DESIGN',
-  type: 'image',
-  images: gdImages[i] || [],
-}))
+const graphicProjects = graphicMeta.map((m, i) => {
+  const inner = gdImages[i] || []
+  /* Replace the banner (images[0]) with the new cover from Project image/ folder
+     when available; keep the rest of the detail-page imagery intact. */
+  const images = gdBanners[i]
+    ? [gdBanners[i], ...inner.slice(1)]
+    : inner
+  return {
+    ...m,
+    num: pad(),
+    category: 'Graphic Design',
+    tag: 'GRAPHIC DESIGN',
+    type: 'image',
+    images,
+  }
+})
 
 const uxProjects = uxMeta.map((m, i) => ({
   ...m,

@@ -134,15 +134,32 @@ function Tile({ p, size, index, navigate }) {
           onClick={toggleMute}
           style={{
             position: 'absolute', top: 14, right: 14,
-            width: 40, height: 40, borderRadius: '50%',
-            background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(255,255,255,0.3)',
+            width: 42, height: 42, borderRadius: '50%',
+            background: 'linear-gradient(135deg, rgba(20,20,20,0.85), rgba(0,0,0,0.7))',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.22)',
+            boxShadow: '0 10px 24px -10px rgba(0,0,0,0.6)',
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            color: '#fff', fontSize: 16, cursor: 'none',
+            color: '#fff', cursor: 'none',
             zIndex: 4,
+            transition: 'transform 0.25s ease, background 0.25s ease',
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.08)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
         >
-          {muted ? '🔇' : '🔊'}
+          {muted ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/>
+              <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+          )}
         </button>
       )}
 

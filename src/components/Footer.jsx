@@ -9,7 +9,19 @@ const socials = [
   { label: 'Behance',   href: 'https://www.behance.net/mksrahulrai' },
 ]
 
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/designethical0@gmail.com'
+const OWNER_EMAIL    = 'designethical0@gmail.com'
+const FORM_ENDPOINT  = `https://formsubmit.co/ajax/${OWNER_EMAIL}`
+
+function openMailtoFallback(form) {
+  const subject = encodeURIComponent(`New portfolio enquiry from ${form.name || 'website visitor'}`)
+  const body = encodeURIComponent(
+    `Name: ${form.name}\n` +
+    `Email: ${form.email}\n` +
+    `Phone: ${form.phone || '-'}\n\n` +
+    `Message:\n${form.message}`,
+  )
+  window.location.href = `mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`
+}
 
 export default function Footer() {
   const ref    = useRef(null)
@@ -28,19 +40,26 @@ export default function Footer() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
+          name:    form.name,
+          email:   form.email,
+          phone:   form.phone,
           message: form.message,
           _subject: `New portfolio enquiry from ${form.name}`,
+          _replyto: form.email,         // replies go directly to the sender
           _template: 'table',
-          _captcha: 'false',
+          _captcha:  'false',
         }),
       })
-      if (!res.ok) throw new Error('Network error')
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok || data.success === 'false') {
+        throw new Error(data.message || 'Submission failed')
+      }
       setStatus('sent')
       setForm({ name: '', email: '', phone: '', message: '' })
     } catch (err) {
+      // Fallback: open user's mail client pre-filled so the message still
+      // reaches the inbox even if the backend is unreachable / not yet activated.
+      openMailtoFallback(form)
       setStatus('error')
     }
   }
@@ -158,7 +177,8 @@ export default function Footer() {
 
               {status === 'error' && (
                 <p style={{ marginTop: 14, fontFamily: 'Inter', fontSize: 12, color: '#dc2626' }}>
-                  Could not send. Please try again or email designethical0@gmail.com directly.
+                  Couldn't reach the server — your mail app has been opened with the
+                  message pre-filled. Just hit Send.
                 </p>
               )}
             </form>
