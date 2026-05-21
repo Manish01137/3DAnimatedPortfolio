@@ -88,7 +88,7 @@ function Tile({ p, size, index, navigate }) {
           />
         ) : (
           <img
-            src={p.images[0]}
+            src={p.cover || p.images[0]}
             alt={p.name}
             draggable={false}
             style={{

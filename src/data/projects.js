@@ -166,22 +166,17 @@ const reelMeta = [
 let n = 0
 const pad = () => String(++n).padStart(2, '0')
 
-const graphicProjects = graphicMeta.map((m, i) => {
-  const inner = gdImages[i] || []
-  /* Replace the banner (images[0]) with the new cover from Project image/ folder
-     when available; keep the rest of the detail-page imagery intact. */
-  const images = gdBanners[i]
-    ? [gdBanners[i], ...inner.slice(1)]
-    : inner
-  return {
-    ...m,
-    num: pad(),
-    category: 'Graphic Design',
-    tag: 'GRAPHIC DESIGN',
-    type: 'image',
-    images,
-  }
-})
+const graphicProjects = graphicMeta.map((m, i) => ({
+  ...m,
+  num: pad(),
+  category: 'Graphic Design',
+  tag: 'GRAPHIC DESIGN',
+  type: 'image',
+  /* `cover` is the listing/thumbnail banner (from src/assets/Project image/),
+     `images` is the full detail-page gallery (from Project images and content/). */
+  cover: gdBanners[i] || (gdImages[i] && gdImages[i][0]) || null,
+  images: gdImages[i] || [],
+}))
 
 const uxProjects = uxMeta.map((m, i) => ({
   ...m,

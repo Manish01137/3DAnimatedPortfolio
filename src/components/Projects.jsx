@@ -252,7 +252,7 @@ export default function Projects() {
                   background: '#0a0a0a',
                 }}>
                   <img
-                    src={p.images[0]}
+                    src={p.cover || p.images[0]}
                     alt={p.name}
                     style={{
                       position: 'absolute',

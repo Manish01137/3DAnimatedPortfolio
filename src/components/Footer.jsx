@@ -9,24 +9,18 @@ const socials = [
   { label: 'Behance',   href: 'https://www.behance.net/mksrahulrai' },
 ]
 
-const OWNER_EMAIL    = 'designethical0@gmail.com'
-const FORM_ENDPOINT  = `https://formsubmit.co/ajax/${OWNER_EMAIL}`
-
-function openMailtoFallback(form) {
-  const subject = encodeURIComponent(`New portfolio enquiry from ${form.name || 'website visitor'}`)
-  const body = encodeURIComponent(
-    `Name: ${form.name}\n` +
-    `Email: ${form.email}\n` +
-    `Phone: ${form.phone || '-'}\n\n` +
-    `Message:\n${form.message}`,
-  )
-  window.location.href = `mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`
-}
+/* ── Web3Forms — get your access key at https://web3forms.com (free, no email activation step). ──
+   Sign up with the email you want submissions delivered to (designethical0@gmail.com)
+   and paste the key below. */
+const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE'
+const FORM_ENDPOINT        = 'https://api.web3forms.com/submit'
+const OWNER_EMAIL          = 'designethical0@gmail.com'
 
 export default function Footer() {
   const ref    = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
   const [status, setStatus] = useState('idle')  // 'idle' | 'sending' | 'sent' | 'error'
+  const [errorMsg, setErrorMsg] = useState('')
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
 
   const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
@@ -35,31 +29,30 @@ export default function Footer() {
     e.preventDefault()
     if (status === 'sending') return
     setStatus('sending')
+    setErrorMsg('')
     try {
       const res = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          name:    form.name,
-          email:   form.email,
-          phone:   form.phone,
-          message: form.message,
-          _subject: `New portfolio enquiry from ${form.name}`,
-          _replyto: form.email,         // replies go directly to the sender
-          _template: 'table',
-          _captcha:  'false',
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject:    `New portfolio enquiry from ${form.name}`,
+          from_name:  form.name,
+          replyto:    form.email,
+          name:       form.name,
+          email:      form.email,
+          phone:      form.phone,
+          message:    form.message,
         }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok || data.success === 'false') {
+      if (!res.ok || data.success !== true) {
         throw new Error(data.message || 'Submission failed')
       }
       setStatus('sent')
       setForm({ name: '', email: '', phone: '', message: '' })
     } catch (err) {
-      // Fallback: open user's mail client pre-filled so the message still
-      // reaches the inbox even if the backend is unreachable / not yet activated.
-      openMailtoFallback(form)
+      setErrorMsg(err.message || 'Could not send right now.')
       setStatus('error')
     }
   }
@@ -177,8 +170,10 @@ export default function Footer() {
 
               {status === 'error' && (
                 <p style={{ marginTop: 14, fontFamily: 'Inter', fontSize: 12, color: '#dc2626' }}>
-                  Couldn't reach the server — your mail app has been opened with the
-                  message pre-filled. Just hit Send.
+                  {errorMsg || 'Could not send right now.'} You can also email me at{' '}
+                  <a href={`mailto:${OWNER_EMAIL}`} style={{ color: '#dc2626', textDecoration: 'underline' }}>
+                    {OWNER_EMAIL}
+                  </a>.
                 </p>
               )}
             </form>
