@@ -12,7 +12,7 @@ const socials = [
 /* ── Web3Forms — get your access key at https://web3forms.com (free, no email activation step). ──
    Sign up with the email you want submissions delivered to (designethical0@gmail.com)
    and paste the key below. */
-const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE'
+const WEB3FORMS_ACCESS_KEY = 'a9b1c6ca-1437-45f0-8173-5e9cf58ab00d'
 const FORM_ENDPOINT        = 'https://api.web3forms.com/submit'
 const OWNER_EMAIL          = 'designethical0@gmail.com'
 
